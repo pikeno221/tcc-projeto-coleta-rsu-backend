@@ -1,34 +1,56 @@
 package io.projetocoletarsu.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.validation.annotation.Validated;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
 /**
  * Usuario
  */
-@Validated
-public class Usuario   {
+@Entity
+@Table(name = "usuarios")
+public class Usuario implements Serializable {
+
+  private static final long serialVersionUID = 1L;
+
+
   @JsonProperty("id")
-  private Long id = null;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
   @JsonProperty("nomeCompleto")
-  private String nomeCompleto = null;
+  @Column(length = 200)
+  @NotNull(message = "nome obrigatorio")
+  private String nomeCompleto;
 
   @JsonProperty("email")
-  private String email = null;
+  @Column(length = 100)
+  @NotNull(message = "email obrigatorio")
+  private String email;
 
   @JsonProperty("senha")
-  private String senha = null;
+  @Column(length = 25)
+  @NotNull(message = "senha obrigatorio")
+  private String senha;
 
   @JsonProperty("celular")
+  @Column(length = 25)
+  @NotNull(message = "celular obrigatorio")
   private String celular = null;
 
   @JsonProperty("endereco")
-  private String endereco = null;
+  @Column(length = 300)
+  @NotNull(message = "endereco obrigatorio")
+  private String endereco;
 
   @JsonProperty("ativo")
+  @NotNull(message = "ativo obrigatorio")
   private Boolean ativo = null;
 
   public Usuario id(Long id) {

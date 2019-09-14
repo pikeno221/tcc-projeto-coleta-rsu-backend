@@ -3,7 +3,7 @@
  * https://github.com/swagger-api/swagger-codegen
  * Do not edit the class manually.
  */
-package io.projetocoletarsu.api;
+package io.projetocoletarsu.controller;
 
 import io.projetocoletarsu.model.Retorno;
 import io.projetocoletarsu.model.Usuario;

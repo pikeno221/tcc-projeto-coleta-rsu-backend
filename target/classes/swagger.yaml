@@ -1,0 +1,249 @@
+swagger: "2.0"
+info:
+  description: "Contrato da API do Projeto de Conclusao de curso"
+  version: "1.0.0"
+  title: "Automatizacao Coleta de RSU"
+  contact:
+    email: "gabriellgomesbh@gmail.com"
+host: "localhost:8080"
+basePath: "/v1"
+tags:
+  - name: "usuario"
+    description: "Endpoints relacionados ao usuario"
+schemes:
+  - "http"
+paths:
+  /usuario:
+    get:
+      tags:
+        - "usuario"
+      summary: "Buscar todos Usuarios"
+      description: "endpoint que busca todos usuarios da base de dados."
+      operationId: "buscarTodosUsuarios"
+      produces:
+        - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "Sucesso ao buscar todos usuarios"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Usuario"
+        204:
+          description: "Nenhum Usuario encontrado na base de dados"
+        422:
+          description: "Request nao processada"
+    post:
+      tags:
+        - "usuario"
+      summary: "Adicionar um novo Usuario"
+      description: "endpoint que cria um usuario na base de dados."
+      operationId: "criarUsuario"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Novo Usuario"
+          required: true
+          schema:
+            $ref: "#/definitions/Usuario"
+      responses:
+        201:
+          description: "Usuario inserido com sucesso"
+        400:
+          description: "Bad Request"
+        422:
+          description: "Request nao processada"
+  /usuario/{idUsuario}:
+    put:
+      tags:
+        - "usuario"
+      summary: "Atualizar um Usuario existente"
+      description: "endpoint que atualiza um usuario na base de dados."
+      operationId: "atualizarUsuario"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Usuario atualizado"
+          required: true
+          schema:
+            $ref: "#/definitions/Usuario"
+        - in: "path"
+          name: "idUsuario"
+          description: "ID do Usuario"
+          required: true
+          type: integer
+      responses:
+        200:
+          description: "Atualizacao realizada com sucesso"
+          schema:
+            $ref: '#/definitions/Retorno'
+        400:
+          description: "ID do Usuario invalido"
+        404:
+          description: "Usuario Nao Encontrado"
+        422:
+          description: "Request nao processada"
+    get:
+      tags:
+        - "usuario"
+      summary: "Buscar um Usuario {ID}"
+      description: "endpoint que busca um usuario pelo id na base de dados."
+      operationId: "buscarUsuarioPorId"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "idUsuario"
+          in: "path"
+          description: "Id do Usuario"
+          required: true
+          type: "integer"
+      responses:
+        200:
+          description: "Sucesso ao buscar usuario"
+          schema:
+            $ref: "#/definitions/Usuario"
+        400:
+          description: "ID do Usuario invalido"
+        404:
+          description: "Usuario Nao Encontrado"
+        422:
+          description: "Request nao processada"
+    delete:
+      tags:
+        - "usuario"
+      summary: "Deletar um Usuario"
+      description: "endpoint que deleta um usuario pelo id na base de dados."
+      operationId: "deletarUsuario"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "idUsuario"
+          in: "path"
+          description: "Id do Usuario"
+          required: true
+          type: "integer"
+      responses:
+        204:
+          description: "exclusao realizada com sucesso"
+        400:
+          description: "ID do Usuario invalido"
+        404:
+          description: "Usuario Nao Encontrado"
+        405:
+          description: "Erro de Validacao"
+  /usuario/logar:
+    get:
+      tags:
+        - "usuario"
+      summary: "Logar do Usuario"
+      description: "endpoint que loga um usuario na aplicacao."
+      operationId: "logarUsuario"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "header"
+          name: "usuario"
+          description: "Email do Usuario"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "senha"
+          description: "Senha do Usuario"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "sucesso ao realizar login"
+          schema:
+            $ref: "#/definitions/Retorno"
+        400:
+          description: "Campos invalidos enviados na request"
+          schema:
+            $ref: "#/definitions/Retorno"
+        404:
+          description: "Usuario Nao Encontrado"
+          schema:
+            $ref: "#/definitions/Retorno"
+        405:
+          description: "Erro de Validacao"
+          schema:
+            $ref: "#/definitions/Retorno"
+  /user/logout:
+    get:
+      tags:
+        - "usuario"
+      summary: "Logout do Usuario"
+      description: "endpoint que faz logoff na aplicacao"
+      operationId: "logoutUsuario"
+      produces:
+        - "application/json"
+      parameters: []
+      responses:
+        default:
+          description: "successful operation"
+  /usuario/recuperar-senha:
+    post:
+      tags:
+        - "usuario"
+      summary: "Recuperar Senha do Usuario"
+      description: "endpoint que envia senha para o email do usuario."
+      operationId: "recuperarSenha"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "email do usuario a ser recuperado a senha"
+          required: true
+          schema:
+            $ref: '#/definitions/Retorno'
+      responses:
+        200:
+          description: "sucesso ao reenviar email com a senha ao cliente"
+          schema:
+            $ref: "#/definitions/Retorno"
+        422:
+          description: "Campos invalidos enviados na request"
+          schema:
+            $ref: "#/definitions/Retorno"
+
+
+
+definitions:
+  Usuario:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      nomeCompleto:
+        type: "string"
+      email:
+        type: "string"
+      senha:
+        type: "string"
+      celular:
+        type: "string"
+      endereco:
+        type: "string"
+      ativo:
+        type: "boolean"
+        description: "Status Usuario"
+  Retorno:
+    type: "object"
+    properties:
+      sucesso:
+        type: "boolean"
+      mensagem:
+        type: "string"
+
+

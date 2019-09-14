@@ -1,11 +1,14 @@
-package io.projetocoletarsu.api;
+package io.projetocoletarsu.controller;
 
+import io.projetocoletarsu.exception.PersistirDadosException;
 import io.projetocoletarsu.model.Retorno;
 import io.projetocoletarsu.model.Usuario;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.projetocoletarsu.service.UsuarioService;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,8 +16,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -27,25 +30,23 @@ public class UsuarioApiController implements UsuarioApi {
 
     private final HttpServletRequest request;
 
-    @org.springframework.beans.factory.annotation.Autowired
+    @Autowired
+    private UsuarioService service;
+
+    @Autowired
     public UsuarioApiController(ObjectMapper objectMapper, HttpServletRequest request) {
         this.objectMapper = objectMapper;
         this.request = request;
     }
 
-    public ResponseEntity<Retorno> atualizarUsuario(@ApiParam(value = "Usuario atualizado" ,required=true )  @Valid @RequestBody Usuario body, @ApiParam(value = "ID do Usuario",required=true) @PathVariable("idUsuario") Integer idUsuario) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                
-                return new ResponseEntity<Retorno>(objectMapper.readValue("{  \"mensagem\" : \"Erro ao atualizar usuario.\",  \"sucesso\" : false}", Retorno.class), HttpStatus.OK);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Retorno(false, "usuario nao encontrado"));
-            }
+    public ResponseEntity<Void> criarUsuario(@ApiParam(value = "Novo Usuario" ,required=true )  @Valid @RequestBody Usuario usuario) {
+        try {
+            service.criarUsuario(usuario);
+            throw new PersistirDadosException(404, "tst");
+            //return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+        } catch (PersistirDadosException e) {
+            return (ResponseEntity<Void>) ResponseEntity.unprocessableEntity();
         }
-
-        return new ResponseEntity<Retorno>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     public ResponseEntity<List<Usuario>> buscarTodosUsuarios() {
@@ -76,10 +77,21 @@ public class UsuarioApiController implements UsuarioApi {
         return new ResponseEntity<Usuario>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<Void> criarUsuario(@ApiParam(value = "Novo Usuario" ,required=true )  @Valid @RequestBody Usuario body) {
+    public ResponseEntity<Retorno> atualizarUsuario(@ApiParam(value = "Usuario atualizado" ,required=true )  @Valid @RequestBody Usuario body, @ApiParam(value = "ID do Usuario",required=true) @PathVariable("idUsuario") Integer idUsuario) {
         String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+        if (accept != null && accept.contains("application/json")) {
+            try {
+                
+                return new ResponseEntity<Retorno>(objectMapper.readValue("{  \"mensagem\" : \"Erro ao atualizar usuario.\",  \"sucesso\" : false}", Retorno.class), HttpStatus.OK);
+            } catch (IOException e) {
+                log.error("Couldn't serialize response for content type application/json", e);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Retorno(false, "usuario nao encontrado"));
+            }
+        }
+
+        return new ResponseEntity<Retorno>(HttpStatus.NOT_IMPLEMENTED);
     }
+
 
     public ResponseEntity<Void> deletarUsuario(@ApiParam(value = "Id do Usuario",required=true) @PathVariable("idUsuario") Integer idUsuario) {
         String accept = request.getHeader("Accept");
