@@ -21,7 +21,7 @@ public class Usuario implements Serializable {
     @JsonProperty("id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @JsonProperty("cpf")
     @Column(length = 200)
@@ -57,7 +57,7 @@ public class Usuario implements Serializable {
     @NotNull(message = "statusUsuario obrigatorio")
     private StatusUsuario statusUsuario = null;
 
-    public Usuario id(int id) {
+    public Usuario id(Integer id) {
         this.id = id;
         return this;
     }
@@ -70,11 +70,11 @@ public class Usuario implements Serializable {
     @ApiModelProperty(value = "")
 
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

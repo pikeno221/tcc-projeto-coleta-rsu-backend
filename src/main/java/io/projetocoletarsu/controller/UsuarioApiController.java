@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.projetocoletarsu.exception.BDException;
 import io.projetocoletarsu.model.Usuario;
 import io.projetocoletarsu.model.retorno.Retorno;
-import io.projetocoletarsu.model.retorno.RetornoCriarUsuario;
+import io.projetocoletarsu.model.retorno.RetornoUsuario;
 import io.projetocoletarsu.model.retorno.RetornoTodosUsuarios;
 import io.projetocoletarsu.service.UsuarioService;
 import io.swagger.annotations.ApiParam;
@@ -22,7 +22,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.List;
 
 @Controller
 public class UsuarioApiController implements UsuarioApi {
@@ -44,7 +43,7 @@ public class UsuarioApiController implements UsuarioApi {
 
     public ResponseEntity<Retorno> criarUsuario(@ApiParam(value = "Novo Usuario", required = true) @Valid @RequestBody Usuario usuario) {
         try {
-            RetornoCriarUsuario retornoService = service.criarUsuario(usuario);
+            RetornoUsuario retornoService = service.criarUsuario(usuario);
 
             if (retornoService.isSucesso()) {
                 return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(retornoService.getId())
@@ -54,7 +53,7 @@ public class UsuarioApiController implements UsuarioApi {
             }
 
         } catch (BDException e) {
-            return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
+            return ResponseEntity.unprocessableEntity().body(new RetornoTodosUsuarios(false, "Erro ao criar usuario", null));
         }
     }
 
@@ -63,22 +62,23 @@ public class UsuarioApiController implements UsuarioApi {
             return ResponseEntity.ok(service.buscarTodosUsuarios());
 
         } catch (BDException e) {
-            return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
+            return ResponseEntity.unprocessableEntity().body(new RetornoTodosUsuarios(false, "Erro ao buscar usuarios", null));
         }
     }
 
-    public ResponseEntity<Usuario> buscarUsuarioPorId(@ApiParam(value = "Id do Usuario", required = true) @PathVariable("idUsuario") Integer idUsuario) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<Usuario>(objectMapper.readValue("{  \"senha\" : \"senha\",  \"ativo\" : true,  \"endereco\" : \"endereco\",  \"celular\" : \"celular\",  \"id\" : 0,  \"email\" : \"email\",  \"nomeCompleto\" : \"nomeCompleto\"}", Usuario.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Usuario>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
+    public ResponseEntity<RetornoUsuario> buscarUsuarioPorId(@ApiParam(value = "Id do Usuario", required = true) @PathVariable("idUsuario") Integer idUsuario) {
 
-        return new ResponseEntity<Usuario>(HttpStatus.NOT_IMPLEMENTED);
+        try {
+            RetornoUsuario retorno = service.buscarUsuarioPorId(idUsuario);
+            if (retorno.isSucesso()) {
+                return ResponseEntity.ok(retorno);
+            } else {
+                return ResponseEntity.unprocessableEntity().body(retorno);
+            }
+
+        } catch (BDException e) {
+            return ResponseEntity.unprocessableEntity().body(new RetornoUsuario(false, "Erro ao buscar usuario", null, null));
+        }
     }
 
     public ResponseEntity<Retorno> atualizarUsuario(@ApiParam(value = "Usuario atualizado", required = true) @Valid @RequestBody Usuario body, @ApiParam(value = "ID do Usuario", required = true) @PathVariable("idUsuario") Integer idUsuario) {

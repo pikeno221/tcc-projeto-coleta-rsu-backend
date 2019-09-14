@@ -8,6 +8,7 @@ package io.projetocoletarsu.controller;
 import io.projetocoletarsu.model.retorno.Retorno;
 import io.projetocoletarsu.model.Usuario;
 import io.projetocoletarsu.model.retorno.RetornoTodosUsuarios;
+import io.projetocoletarsu.model.retorno.RetornoUsuario;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -51,7 +52,7 @@ public interface UsuarioApi {
     @RequestMapping(value = "/usuario/{idUsuario}",
             produces = {"application/json"},
             method = RequestMethod.GET)
-    ResponseEntity<Usuario> buscarUsuarioPorId(@ApiParam(value = "Id do Usuario", required = true) @PathVariable("idUsuario") Integer idUsuario);
+    ResponseEntity<RetornoUsuario> buscarUsuarioPorId(@ApiParam(value = "Id do Usuario", required = true) @PathVariable("idUsuario") Integer idUsuario);
 
 
     @ApiOperation(value = "Adicionar um novo Usuario", nickname = "criarUsuario", notes = "endpoint que cria um usuario na base de dados.", tags = {"usuario",})
