@@ -7,6 +7,7 @@ package io.projetocoletarsu.controller;
 
 import io.projetocoletarsu.model.retorno.Retorno;
 import io.projetocoletarsu.model.Usuario;
+import io.projetocoletarsu.model.retorno.RetornoTodosUsuarios;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +39,7 @@ public interface UsuarioApi {
     @RequestMapping(value = "/usuario",
             produces = {"application/json"},
             method = RequestMethod.GET)
-    ResponseEntity<List<Usuario>> buscarTodosUsuarios();
+    ResponseEntity<RetornoTodosUsuarios> buscarTodosUsuarios();
 
 
     @ApiOperation(value = "Buscar um Usuario {ID}", nickname = "buscarUsuarioPorId", notes = "endpoint que busca um usuario pelo id na base de dados.", response = Usuario.class, tags = {"usuario",})

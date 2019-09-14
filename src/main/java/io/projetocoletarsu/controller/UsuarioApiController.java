@@ -1,10 +1,11 @@
 package io.projetocoletarsu.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.projetocoletarsu.exception.PersistirDadosException;
+import io.projetocoletarsu.exception.BDException;
+import io.projetocoletarsu.model.Usuario;
 import io.projetocoletarsu.model.retorno.Retorno;
 import io.projetocoletarsu.model.retorno.RetornoCriarUsuario;
-import io.projetocoletarsu.model.Usuario;
+import io.projetocoletarsu.model.retorno.RetornoTodosUsuarios;
 import io.projetocoletarsu.service.UsuarioService;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
@@ -52,23 +53,18 @@ public class UsuarioApiController implements UsuarioApi {
                 return ResponseEntity.unprocessableEntity().body(retornoService);
             }
 
-        } catch (PersistirDadosException e) {
+        } catch (BDException e) {
             return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 
-    public ResponseEntity<List<Usuario>> buscarTodosUsuarios() {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<List<Usuario>>(objectMapper.readValue("[ {  \"senha\" : \"senha\",  \"ativo\" : true,  \"endereco\" : \"endereco\",  \"celular\" : \"celular\",  \"id\" : 0,  \"email\" : \"email\",  \"nomeCompleto\" : \"nomeCompleto\"}, {  \"senha\" : \"senha\",  \"ativo\" : true,  \"endereco\" : \"endereco\",  \"celular\" : \"celular\",  \"id\" : 0,  \"email\" : \"email\",  \"nomeCompleto\" : \"nomeCompleto\"} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<List<Usuario>>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
+    public ResponseEntity<RetornoTodosUsuarios> buscarTodosUsuarios() {
+        try {
+            return ResponseEntity.ok(service.buscarTodosUsuarios());
 
-        return new ResponseEntity<List<Usuario>>(HttpStatus.NOT_IMPLEMENTED);
+        } catch (BDException e) {
+            return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
+        }
     }
 
     public ResponseEntity<Usuario> buscarUsuarioPorId(@ApiParam(value = "Id do Usuario", required = true) @PathVariable("idUsuario") Integer idUsuario) {
