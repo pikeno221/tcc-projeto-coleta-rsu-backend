@@ -1,11 +1,12 @@
 package io.projetocoletarsu.controller;
 
-import io.projetocoletarsu.exception.PersistirDadosException;
-import io.projetocoletarsu.model.Retorno;
-import io.projetocoletarsu.model.Usuario;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.projetocoletarsu.exception.PersistirDadosException;
+import io.projetocoletarsu.model.retorno.Retorno;
+import io.projetocoletarsu.model.retorno.RetornoCriarUsuario;
+import io.projetocoletarsu.model.Usuario;
 import io.projetocoletarsu.service.UsuarioService;
-import io.swagger.annotations.*;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -39,13 +41,19 @@ public class UsuarioApiController implements UsuarioApi {
         this.request = request;
     }
 
-    public ResponseEntity<Void> criarUsuario(@ApiParam(value = "Novo Usuario" ,required=true )  @Valid @RequestBody Usuario usuario) {
+    public ResponseEntity<Retorno> criarUsuario(@ApiParam(value = "Novo Usuario", required = true) @Valid @RequestBody Usuario usuario) {
         try {
-            service.criarUsuario(usuario);
-            throw new PersistirDadosException(404, "tst");
-            //return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+            RetornoCriarUsuario retornoService = service.criarUsuario(usuario);
+
+            if (retornoService.isSucesso()) {
+                return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(retornoService.getId())
+                        .toUri()).build();
+            } else {
+                return ResponseEntity.unprocessableEntity().body(retornoService);
+            }
+
         } catch (PersistirDadosException e) {
-            return (ResponseEntity<Void>) ResponseEntity.unprocessableEntity();
+            return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 
@@ -63,7 +71,7 @@ public class UsuarioApiController implements UsuarioApi {
         return new ResponseEntity<List<Usuario>>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<Usuario> buscarUsuarioPorId(@ApiParam(value = "Id do Usuario",required=true) @PathVariable("idUsuario") Integer idUsuario) {
+    public ResponseEntity<Usuario> buscarUsuarioPorId(@ApiParam(value = "Id do Usuario", required = true) @PathVariable("idUsuario") Integer idUsuario) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
@@ -77,11 +85,11 @@ public class UsuarioApiController implements UsuarioApi {
         return new ResponseEntity<Usuario>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<Retorno> atualizarUsuario(@ApiParam(value = "Usuario atualizado" ,required=true )  @Valid @RequestBody Usuario body, @ApiParam(value = "ID do Usuario",required=true) @PathVariable("idUsuario") Integer idUsuario) {
+    public ResponseEntity<Retorno> atualizarUsuario(@ApiParam(value = "Usuario atualizado", required = true) @Valid @RequestBody Usuario body, @ApiParam(value = "ID do Usuario", required = true) @PathVariable("idUsuario") Integer idUsuario) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                
+
                 return new ResponseEntity<Retorno>(objectMapper.readValue("{  \"mensagem\" : \"Erro ao atualizar usuario.\",  \"sucesso\" : false}", Retorno.class), HttpStatus.OK);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
@@ -93,12 +101,12 @@ public class UsuarioApiController implements UsuarioApi {
     }
 
 
-    public ResponseEntity<Void> deletarUsuario(@ApiParam(value = "Id do Usuario",required=true) @PathVariable("idUsuario") Integer idUsuario) {
+    public ResponseEntity<Void> deletarUsuario(@ApiParam(value = "Id do Usuario", required = true) @PathVariable("idUsuario") Integer idUsuario) {
         String accept = request.getHeader("Accept");
         return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<Retorno> logarUsuario(@ApiParam(value = "Email do Usuario" ,required=true) @RequestHeader(value="usuario", required=true) String usuario,@ApiParam(value = "Senha do Usuario" ,required=true) @RequestHeader(value="senha", required=true) String senha) {
+    public ResponseEntity<Retorno> logarUsuario(@ApiParam(value = "Email do Usuario", required = true) @RequestHeader(value = "usuario", required = true) String usuario, @ApiParam(value = "Senha do Usuario", required = true) @RequestHeader(value = "senha", required = true) String senha) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
@@ -113,14 +121,13 @@ public class UsuarioApiController implements UsuarioApi {
     }
 
 
-
     public ResponseEntity<Void> logoutUsuario() {
         String accept = request.getHeader("Accept");
         return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
 
 
-    public ResponseEntity<Retorno> recuperarSenha(@ApiParam(value = "email do usuario a ser recuperado a senha" ,required=true )  @Valid @RequestBody Retorno body) {
+    public ResponseEntity<Retorno> recuperarSenha(@ApiParam(value = "email do usuario a ser recuperado a senha", required = true) @Valid @RequestBody Retorno body) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {

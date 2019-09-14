@@ -1,4 +1,4 @@
-package io.projetocoletarsu.model;
+package io.projetocoletarsu.model.retorno;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -19,6 +19,10 @@ public class Retorno   {
   public Retorno(Boolean sucesso, String mensagem) {
     this.sucesso = sucesso;
     this.mensagem = mensagem;
+
+  }
+
+  public Retorno(){
 
   }
 

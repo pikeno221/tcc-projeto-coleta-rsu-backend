@@ -22,7 +22,12 @@ public class Usuario implements Serializable {
   @JsonProperty("id")
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private int id;
+
+  @JsonProperty("cpf")
+  @Column(length = 200)
+  @NotNull(message = "cpf obrigatorio")
+  private String cpf;
 
   @JsonProperty("nomeCompleto")
   @Column(length = 200)
@@ -53,7 +58,7 @@ public class Usuario implements Serializable {
   @NotNull(message = "ativo obrigatorio")
   private Boolean ativo = null;
 
-  public Usuario id(Long id) {
+  public Usuario id(int id) {
     this.id = id;
     return this;
   }
@@ -65,11 +70,11 @@ public class Usuario implements Serializable {
   @ApiModelProperty(value = "")
 
 
-  public Long getId() {
+  public int getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(int id) {
     this.id = id;
   }
 
@@ -162,6 +167,8 @@ public class Usuario implements Serializable {
    * Get endereco
    * @return endereco
   **/
+
+
   @ApiModelProperty(value = "")
 
 
@@ -194,6 +201,15 @@ public class Usuario implements Serializable {
   }
 
 
+  public String getCpf() {
+    return cpf;
+  }
+
+  public void setCpf(String cpf) {
+    this.cpf = cpf;
+  }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -203,8 +219,7 @@ public class Usuario implements Serializable {
       return false;
     }
     Usuario usuario = (Usuario) o;
-    return Objects.equals(this.id, usuario.id) &&
-        Objects.equals(this.nomeCompleto, usuario.nomeCompleto) &&
+    return Objects.equals(this.nomeCompleto, usuario.nomeCompleto) &&
         Objects.equals(this.email, usuario.email) &&
         Objects.equals(this.senha, usuario.senha) &&
         Objects.equals(this.celular, usuario.celular) &&
@@ -223,6 +238,7 @@ public class Usuario implements Serializable {
     sb.append("class Usuario {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    cpf: ").append(toIndentedString(cpf)).append("\n");
     sb.append("    nomeCompleto: ").append(toIndentedString(nomeCompleto)).append("\n");
     sb.append("    email: ").append(toIndentedString(email)).append("\n");
     sb.append("    senha: ").append(toIndentedString(senha)).append("\n");

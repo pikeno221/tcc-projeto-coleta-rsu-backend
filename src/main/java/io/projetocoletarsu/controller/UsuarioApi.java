@@ -5,7 +5,7 @@
  */
 package io.projetocoletarsu.controller;
 
-import io.projetocoletarsu.model.Retorno;
+import io.projetocoletarsu.model.retorno.Retorno;
 import io.projetocoletarsu.model.Usuario;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
@@ -61,8 +61,9 @@ public interface UsuarioApi {
     @RequestMapping(value = "/usuario",
             produces = {"application/json"},
             consumes = {"application/json"},
+
             method = RequestMethod.POST)
-    ResponseEntity<Void> criarUsuario(@ApiParam(value = "Novo Usuario", required = true) @Valid @RequestBody Usuario body);
+    ResponseEntity<Retorno> criarUsuario(@ApiParam(value = "Novo Usuario", required = true) @RequestBody Usuario body);
 
 
     @ApiOperation(value = "Deletar um Usuario", nickname = "deletarUsuario", notes = "endpoint que deleta um usuario pelo id na base de dados.", tags = {"usuario",})

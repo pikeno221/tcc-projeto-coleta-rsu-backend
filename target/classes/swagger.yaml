@@ -225,6 +225,8 @@ definitions:
       id:
         type: "integer"
         format: "int64"
+      cpf:
+        type: "string"
       nomeCompleto:
         type: "string"
       email:
