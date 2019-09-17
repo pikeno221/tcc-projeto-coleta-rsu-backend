@@ -1,6 +1,5 @@
 package io.projetocoletarsu.service;
 
-import io.projetocoletarsu.controller.UsuarioApiController;
 import io.projetocoletarsu.exception.ApiException;
 import io.projetocoletarsu.model.Usuario;
 import io.projetocoletarsu.model.retorno.RetornoTodosUsuarios;
@@ -17,7 +16,7 @@ import java.util.Optional;
 @Service
 public class UsuarioService {
 
-    private static final Logger log = LoggerFactory.getLogger(UsuarioApiController.class);
+    private static final Logger log = LoggerFactory.getLogger(UsuarioService.class);
 
     @Autowired
     private UsuarioRepository repository;
@@ -73,8 +72,8 @@ public class UsuarioService {
         Optional<Usuario> usuario;
 
         try {
-
             usuario = repository.findById(idUsuario);
+
         } catch (Exception e) {
             log.error("Erro ao buscar os dados", e);
             throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Erro ao buscar os dados.");
@@ -117,6 +116,52 @@ public class UsuarioService {
         }
     }
 
+
+
+    public RetornoUsuario deletarUsuario(Integer idUsuario) throws ApiException {
+        RetornoUsuario retorno = new RetornoUsuario();
+
+        Optional <Usuario> usuarioBanco = repository.findById(idUsuario);
+
+        if (usuarioBanco.isPresent()) {
+
+            try {
+                repository.delete(usuarioBanco.get());
+                retorno.setSucesso(true);
+                retorno.setMensagem("Sucesso ao realizar delecao do Usuario. ");
+
+            } catch (Exception e) {
+                log.error("Error ao excluir usuario.", e);
+                throw new ApiException(422, "Erro ao realizar delecao do usuario");
+            }
+
+        } else {
+            retorno.setSucesso(false);
+            retorno.setMensagem("Usuario nao encontrado");
+        }
+
+        return retorno;
+
+    }
+
+
+
+    private boolean usuarioValidoParaInsercao(Usuario usuario) {
+        return repository.findByNomeCompletoOrCpfOrCelularOrEmail(usuario.getNomeCompleto(), usuario.getCpf(), usuario.getCelular(), usuario.getEmail()).isPresent();
+    }
+
+    private Usuario buscarUsuarioPorTelefone(String celular) {
+        return repository.findByCelular(celular).get();
+    }
+
+    public Usuario buscarUsuarioPorCpf(String cpf) {
+        return repository.findByCpf(cpf).get();
+    }
+
+    public Usuario buscarUsuarioPorEmail(String email) {
+        return repository.findByEmail(email).get();
+    }
+
     private Usuario setaValoresAtualizacaoUsuario(Usuario usuarioBanco, Usuario usuarioDto) {
 
         if (usuarioDto.getNomeCompleto() != null && !usuarioDto.getNomeCompleto().isEmpty())
@@ -148,23 +193,5 @@ public class UsuarioService {
         return usuarioBanco;
 
     }
-
-
-    private boolean usuarioValidoParaInsercao(Usuario usuario) {
-        return buscarUsuarioPorCpf(usuario.getCpf()) == null && buscarUsuarioPorEmail(usuario.getEmail()) == null && buscarUsuarioPorTelefone(usuario.getCelular()) == null;
-    }
-
-    private Usuario buscarUsuarioPorTelefone(String celular) {
-        return repository.findByCelular(celular);
-    }
-
-    public Usuario buscarUsuarioPorCpf(String cpf) {
-        return repository.findByCpf(cpf);
-    }
-
-    public Usuario buscarUsuarioPorEmail(String email) {
-        return repository.findByEmail(email);
-    }
-
 
 }
