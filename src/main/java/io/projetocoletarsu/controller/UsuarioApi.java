@@ -91,15 +91,6 @@ public interface UsuarioApi {
             method = RequestMethod.GET)
     ResponseEntity<Retorno> logarUsuario(@ApiParam(value = "Email do Usuario", required = true) @RequestHeader(value = "usuario", required = true) String usuario, @ApiParam(value = "Senha do Usuario", required = true) @RequestHeader(value = "senha", required = true) String senha);
 
-    @ApiOperation(value = "Logout do Usuario", nickname = "logoutUsuario", notes = "endpoint que faz logoff na aplicacao", tags = {"usuario",})
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "successful operation")})
-    @RequestMapping(value = "/usuario/logout",
-            produces = {"application/json"},
-            method = RequestMethod.GET)
-    ResponseEntity<Void> logoutUsuario();
-
-
     @ApiOperation(value = "Recuperar Senha do Usuario", nickname = "recuperarSenha", notes = "endpoint que envia senha para o email do usuario.", response = Retorno.class, tags = {"usuario",})
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "sucesso ao reenviar email com a senha ao cliente", response = Retorno.class),

@@ -1,11 +1,11 @@
 package io.projetocoletarsu.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.projetocoletarsu.exception.BDException;
+import io.projetocoletarsu.exception.ApiException;
 import io.projetocoletarsu.model.Usuario;
 import io.projetocoletarsu.model.retorno.Retorno;
-import io.projetocoletarsu.model.retorno.RetornoUsuario;
 import io.projetocoletarsu.model.retorno.RetornoTodosUsuarios;
+import io.projetocoletarsu.model.retorno.RetornoUsuario;
 import io.projetocoletarsu.service.UsuarioService;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
@@ -52,7 +52,7 @@ public class UsuarioApiController implements UsuarioApi {
                 return ResponseEntity.unprocessableEntity().body(retornoService);
             }
 
-        } catch (BDException e) {
+        } catch (ApiException e) {
             return ResponseEntity.unprocessableEntity().body(new RetornoTodosUsuarios(false, "Erro ao criar usuario", null));
         }
     }
@@ -61,7 +61,7 @@ public class UsuarioApiController implements UsuarioApi {
         try {
             return ResponseEntity.ok(service.buscarTodosUsuarios());
 
-        } catch (BDException e) {
+        } catch (ApiException e) {
             return ResponseEntity.unprocessableEntity().body(new RetornoTodosUsuarios(false, "Erro ao buscar usuarios", null));
         }
     }
@@ -76,54 +76,66 @@ public class UsuarioApiController implements UsuarioApi {
                 return ResponseEntity.unprocessableEntity().body(retorno);
             }
 
-        } catch (BDException e) {
+        } catch (ApiException e) {
             return ResponseEntity.unprocessableEntity().body(new RetornoUsuario(false, "Erro ao buscar usuario", null, null));
         }
     }
 
-    public ResponseEntity<Retorno> atualizarUsuario(@ApiParam(value = "Usuario atualizado", required = true) @Valid @RequestBody Usuario body, @ApiParam(value = "ID do Usuario", required = true) @PathVariable("idUsuario") Integer idUsuario) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
+    public ResponseEntity<Retorno> atualizarUsuario(@ApiParam(value = "Usuario atualizado", required = true) @Valid @RequestBody Usuario usuario, @ApiParam(value = "ID do Usuario", required = true) @PathVariable("idUsuario") Integer idUsuario) {
+        try {
+            RetornoUsuario retorno = service.atualizarUsuario(idUsuario, usuario);
 
-                return new ResponseEntity<Retorno>(objectMapper.readValue("{  \"mensagem\" : \"Erro ao atualizar usuario.\",  \"sucesso\" : false}", Retorno.class), HttpStatus.OK);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Retorno(false, "usuario nao encontrado"));
+            if (retorno.isSucesso()) {
+                return ResponseEntity.ok(retorno);
+            } else {
+                return ResponseEntity.unprocessableEntity().body(retorno);
             }
+        } catch (ApiException e) {
+            return ResponseEntity.unprocessableEntity().body(new RetornoUsuario(false, "Erro ao atualizar usuario", null, null));
         }
-
-        return new ResponseEntity<Retorno>(HttpStatus.NOT_IMPLEMENTED);
     }
 
 
     public ResponseEntity<Void> deletarUsuario(@ApiParam(value = "Id do Usuario", required = true) @PathVariable("idUsuario") Integer idUsuario) {
-        String accept = request.getHeader("Accept");
+        try {
+            RetornoUsuario retorno = service.deletarUsuario(idUsuario);
+
+            if (retorno.isSucesso()) {
+
+                if (retorno.getUsuario() == null) {
+                    return ResponseEntity.noContent().build();
+                } else {
+                    return ResponseEntity.ok().build();
+
+                }
+            }
+        } catch (Exception e) {
+            return ResponseEntity.unprocessableEntity().build();
+
+        }
+
         return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     public ResponseEntity<Retorno> logarUsuario(@ApiParam(value = "Email do Usuario", required = true) @RequestHeader(value = "usuario", required = true) String usuario, @ApiParam(value = "Senha do Usuario", required = true) @RequestHeader(value = "senha", required = true) String senha) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<Retorno>(objectMapper.readValue("{  \"mensagem\" : \"mensagem\",  \"sucesso\" : true}", Retorno.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Retorno>(HttpStatus.INTERNAL_SERVER_ERROR);
+        try {
+            RetornoUsuario retorno = service.logarUsuario(usuario, senha);
+
+            if (retorno.isSucesso()) {
+                return ResponseEntity.ok(retorno);
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(retorno);
             }
+
+        } catch (ApiException e) {
+            return ResponseEntity.unprocessableEntity().body(new Retorno(false, "Usuario e senha incorreto"));
         }
-
-        return new ResponseEntity<Retorno>(HttpStatus.NOT_IMPLEMENTED);
     }
 
 
-    public ResponseEntity<Void> logoutUsuario() {
-        String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
-    }
-
-
-    public ResponseEntity<Retorno> recuperarSenha(@ApiParam(value = "email do usuario a ser recuperado a senha", required = true) @Valid @RequestBody Retorno body) {
+    public ResponseEntity<Retorno> recuperarSenha
+            (@ApiParam(value = "email do usuario a ser recuperado a senha", required = true) @Valid @RequestBody Retorno
+                     body) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
