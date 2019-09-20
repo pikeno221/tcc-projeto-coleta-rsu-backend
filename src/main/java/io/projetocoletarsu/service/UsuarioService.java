@@ -2,6 +2,7 @@ package io.projetocoletarsu.service;
 
 import io.projetocoletarsu.exception.ApiException;
 import io.projetocoletarsu.model.Usuario;
+import io.projetocoletarsu.model.retorno.Retorno;
 import io.projetocoletarsu.model.retorno.RetornoTodosUsuarios;
 import io.projetocoletarsu.model.retorno.RetornoUsuario;
 import io.projetocoletarsu.repository.UsuarioRepository;
@@ -20,6 +21,9 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository repository;
+
+    @Autowired
+    private AbstractEmailService emailService;
 
     public RetornoUsuario criarUsuario(Usuario usuario) throws ApiException {
         RetornoUsuario retorno = new RetornoUsuario();
@@ -117,11 +121,10 @@ public class UsuarioService {
     }
 
 
-
     public RetornoUsuario deletarUsuario(Integer idUsuario) throws ApiException {
         RetornoUsuario retorno = new RetornoUsuario();
 
-        Optional <Usuario> usuarioBanco = repository.findById(idUsuario);
+        Optional<Usuario> usuarioBanco = repository.findById(idUsuario);
 
         if (usuarioBanco.isPresent()) {
 
@@ -144,10 +147,41 @@ public class UsuarioService {
 
     }
 
+    public RetornoUsuario logarUsuario(String email, String senha) throws ApiException {
+        Optional<Usuario> usuario = null;
+
+        try {
+            usuario = repository.findByEmailAndSenha(usuario, senha);
+
+            if (usuario.isPresent()) {
+                return new RetornoUsuario(true, "Sucesso ao buscar Usuario", usuario.get().getId(), usuario.get());
+            } else {
+                return new RetornoUsuario(false, "Usuario e/ou Senha invalido", null, null);
+            }
+
+        } catch (Exception e) {
+            throw new ApiException(422, "Erro ao realizar delecao do usuario");
+
+        }
+
+    }
+
+
+    public Retorno recuperarSenhaUsuario(String email) {
+
+        Optional<Usuario> usuario = repository.findByEmail(email);
+
+        if (usuario.isPresent()) {
+            emailService.enviarSenhaUsuario(usuario.get());
+            return new Retorno(true, "Mensagem enviada para: " + usuario.get().getEmail());
+        } else {
+            return new Retorno(false, "Usuario nao cadastrado. ");
+        }
+    }
 
 
     private boolean usuarioValidoParaInsercao(Usuario usuario) {
-        return repository.findByNomeCompletoOrCpfOrCelularOrEmail(usuario.getNomeCompleto(), usuario.getCpf(), usuario.getCelular(), usuario.getEmail()).isPresent();
+        return !repository.findByNomeCompletoOrCpfOrCelularOrEmail(usuario.getNomeCompleto(), usuario.getCpf(), usuario.getCelular(), usuario.getEmail()).isPresent();
     }
 
     private Usuario buscarUsuarioPorTelefone(String celular) {

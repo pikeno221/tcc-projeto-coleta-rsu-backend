@@ -5,8 +5,8 @@
  */
 package io.projetocoletarsu.controller;
 
-import io.projetocoletarsu.model.retorno.Retorno;
 import io.projetocoletarsu.model.Usuario;
+import io.projetocoletarsu.model.retorno.Retorno;
 import io.projetocoletarsu.model.retorno.RetornoTodosUsuarios;
 import io.projetocoletarsu.model.retorno.RetornoUsuario;
 import io.swagger.annotations.*;
@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Api(value = "usuario", description = "the usuario API")
 public interface UsuarioApi {
@@ -29,7 +28,7 @@ public interface UsuarioApi {
             produces = {"application/json"},
             consumes = {"application/json"},
             method = RequestMethod.PUT)
-    ResponseEntity<Retorno> atualizarUsuario(@ApiParam(value = "Usuario atualizado", required = true) @Valid @RequestBody Usuario body, @ApiParam(value = "ID do Usuario", required = true) @PathVariable("idUsuario") Integer idUsuario);
+    ResponseEntity<RetornoUsuario> atualizarUsuario(@ApiParam(value = "Usuario atualizado", required = true) @Valid @RequestBody Usuario body, @ApiParam(value = "ID do Usuario", required = true) @PathVariable("idUsuario") Integer idUsuario);
 
 
     @ApiOperation(value = "Buscar todos Usuarios", nickname = "buscarTodosUsuarios", notes = "endpoint que busca todos usuarios da base de dados.", response = Usuario.class, responseContainer = "List", tags = {"usuario",})
@@ -89,7 +88,7 @@ public interface UsuarioApi {
     @RequestMapping(value = "/usuario/logar",
             produces = {"application/json"},
             method = RequestMethod.GET)
-    ResponseEntity<Retorno> logarUsuario(@ApiParam(value = "Email do Usuario", required = true) @RequestHeader(value = "usuario", required = true) String usuario, @ApiParam(value = "Senha do Usuario", required = true) @RequestHeader(value = "senha", required = true) String senha);
+    ResponseEntity<RetornoUsuario> logarUsuario(@ApiParam(value = "Email do Usuario", required = true) @RequestHeader(value = "usuario", required = true) String usuario, @ApiParam(value = "Senha do Usuario", required = true) @RequestHeader(value = "senha", required = true) String senha);
 
     @ApiOperation(value = "Recuperar Senha do Usuario", nickname = "recuperarSenha", notes = "endpoint que envia senha para o email do usuario.", response = Retorno.class, tags = {"usuario",})
     @ApiResponses(value = {
@@ -98,6 +97,6 @@ public interface UsuarioApi {
     @RequestMapping(value = "/usuario/recuperar-senha",
             produces = {"application/json"},
             method = RequestMethod.POST)
-    ResponseEntity<Retorno> recuperarSenha(@ApiParam(value = "email do usuario a ser recuperado a senha", required = true) @Valid @RequestBody Retorno body);
+    ResponseEntity<Retorno> recuperarSenha(@ApiParam(value = "email do usuario a ser recuperado a senha", required = true) @Valid @RequestHeader(value = "usuario", required = true) String usuario);
 
 }
