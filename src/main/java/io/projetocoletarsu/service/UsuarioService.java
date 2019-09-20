@@ -113,10 +113,10 @@ public class UsuarioService {
 
             return retorno;
 
-
         } catch (Exception e) {
             log.error("Erro ao atualizar os dados", e);
             throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Erro ao buscar os dados.");
+
         }
     }
 

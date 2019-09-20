@@ -64,18 +64,20 @@ public class UsuarioApiController implements UsuarioApi {
         try {
             RetornoUsuario retorno = service.buscarUsuarioPorId(idUsuario);
 
-            if (retorno.isSucesso()) {
+            if (retorno.isSucesso())
                 return ResponseEntity.ok(retorno);
-            } else {
+             else
                 return ResponseEntity.unprocessableEntity().body(retorno);
-            }
+
 
         } catch (ApiException e) {
             return ResponseEntity.unprocessableEntity().body(new RetornoUsuario(false, "Erro ao buscar usuario", null, null));
+
         }
     }
 
     public ResponseEntity<RetornoUsuario> atualizarUsuario(@ApiParam(value = "Usuario atualizado", required = true) @Valid @RequestBody Usuario usuario, @ApiParam(value = "ID do Usuario", required = true) @PathVariable("idUsuario") Integer idUsuario) {
+
         try {
             RetornoUsuario retorno = service.atualizarUsuario(idUsuario, usuario);
 
