@@ -20,11 +20,11 @@ public interface UsuarioApi {
 
     @ApiOperation(value = "Atualizar um Usuario existente", nickname = "atualizarUsuario", notes = "endpoint que atualiza um usuario na base de dados.", response = Retorno.class, tags = {"usuario",})
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Atualizacao realizada com sucesso", response = Retorno.class),
+            @ApiResponse(code = 200, message = "Atualizacao realizada com sucesso", response = RetornoUsuario.class),
             @ApiResponse(code = 400, message = "ID do Usuario invalido"),
             @ApiResponse(code = 404, message = "Usuario Nao Encontrado"),
             @ApiResponse(code = 422, message = "Request nao processada")})
-    @RequestMapping(value = "/usuario/{idUsuario}",
+    @RequestMapping(value = "/usuarios/{idUsuario}",
             produces = {"application/json"},
             consumes = {"application/json"},
             method = RequestMethod.PUT)
@@ -33,10 +33,10 @@ public interface UsuarioApi {
 
     @ApiOperation(value = "Buscar todos Usuarios", nickname = "buscarTodosUsuarios", notes = "endpoint que busca todos usuarios da base de dados.", response = Usuario.class, responseContainer = "List", tags = {"usuario",})
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Sucesso ao buscar todos usuarios", response = Usuario.class, responseContainer = "List"),
+            @ApiResponse(code = 200, message = "Sucesso ao buscar todos usuarios", response = RetornoTodosUsuarios.class, responseContainer = "List"),
             @ApiResponse(code = 204, message = "Nenhum Usuario encontrado na base de dados"),
             @ApiResponse(code = 422, message = "Request nao processada")})
-    @RequestMapping(value = "/usuario",
+    @RequestMapping(value = "/usuarios",
             produces = {"application/json"},
             method = RequestMethod.GET)
     ResponseEntity<RetornoTodosUsuarios> buscarTodosUsuarios();
@@ -44,22 +44,22 @@ public interface UsuarioApi {
 
     @ApiOperation(value = "Buscar um Usuario {ID}", nickname = "buscarUsuarioPorId", notes = "endpoint que busca um usuario pelo id na base de dados.", response = Usuario.class, tags = {"usuario",})
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Sucesso ao buscar usuario", response = Usuario.class),
+            @ApiResponse(code = 200, message = "Sucesso ao buscar usuario", response = RetornoUsuario.class),
             @ApiResponse(code = 400, message = "ID do Usuario invalido"),
             @ApiResponse(code = 404, message = "Usuario Nao Encontrado"),
             @ApiResponse(code = 422, message = "Request nao processada")})
-    @RequestMapping(value = "/usuario/{idUsuario}",
+    @RequestMapping(value = "/usuarios/{idUsuario}",
             produces = {"application/json"},
             method = RequestMethod.GET)
     ResponseEntity<RetornoUsuario> buscarUsuarioPorId(@ApiParam(value = "Id do Usuario", required = true) @PathVariable("idUsuario") Integer idUsuario);
 
 
-    @ApiOperation(value = "Adicionar um novo Usuario", nickname = "criarUsuario", notes = "endpoint que cria um usuario na base de dados.", tags = {"usuario",})
+    @ApiOperation(value = "Adicionar um novo Usuario", nickname = "criarUsuario", notes = "endpoint que cria um usuario na base de dados.", response = Retorno.class, tags = {"usuario",})
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Usuario inserido com sucesso"),
             @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 422, message = "Request nao processada")})
-    @RequestMapping(value = "/usuario",
+    @RequestMapping(value = "/usuarios",
             produces = {"application/json"},
             consumes = {"application/json"},
 
@@ -73,7 +73,7 @@ public interface UsuarioApi {
             @ApiResponse(code = 400, message = "ID do Usuario invalido"),
             @ApiResponse(code = 404, message = "Usuario Nao Encontrado"),
             @ApiResponse(code = 405, message = "Erro de Validacao")})
-    @RequestMapping(value = "/usuario/{idUsuario}",
+    @RequestMapping(value = "/usuarios/{idUsuario}",
             produces = {"application/json"},
             method = RequestMethod.DELETE)
     ResponseEntity<Void> deletarUsuario(@ApiParam(value = "Id do Usuario", required = true) @PathVariable("idUsuario") Integer idUsuario);
@@ -85,7 +85,7 @@ public interface UsuarioApi {
             @ApiResponse(code = 400, message = "Campos invalidos enviados na request", response = Retorno.class),
             @ApiResponse(code = 404, message = "Usuario Nao Encontrado", response = Retorno.class),
             @ApiResponse(code = 405, message = "Erro de Validacao", response = Retorno.class)})
-    @RequestMapping(value = "/usuario/logar",
+    @RequestMapping(value = "/usuarios/login",
             produces = {"application/json"},
             method = RequestMethod.GET)
     ResponseEntity<RetornoUsuario> logarUsuario(@ApiParam(value = "Email do Usuario", required = true) @RequestHeader(value = "usuario", required = true) String usuario, @ApiParam(value = "Senha do Usuario", required = true) @RequestHeader(value = "senha", required = true) String senha);
@@ -94,9 +94,10 @@ public interface UsuarioApi {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "sucesso ao reenviar email com a senha ao cliente", response = Retorno.class),
             @ApiResponse(code = 422, message = "Campos invalidos enviados na request", response = Retorno.class)})
-    @RequestMapping(value = "/usuario/recuperar-senha",
+    @RequestMapping(value = "/usuarios/esqueci-senha",
             produces = {"application/json"},
             method = RequestMethod.POST)
     ResponseEntity<Retorno> recuperarSenha(@ApiParam(value = "email do usuario a ser recuperado a senha", required = true) @Valid @RequestHeader(value = "usuario", required = true) String usuario);
+
 
 }

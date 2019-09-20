@@ -13,7 +13,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     Optional<Usuario> findByCelular(String celular);
 
-    Optional<Usuario> findByNomeCompletoOrCpfOrCelularOrEmail(String nomeCompleto, String cpf, String celular, String email);
+    Optional<Usuario> findByNomeCompletoOrCelularOrEmail(String nomeCompleto, String celular, String email);
 
     Optional<Usuario> findByEmailAndSenha(Optional<Usuario> usuario, String senha);
 }

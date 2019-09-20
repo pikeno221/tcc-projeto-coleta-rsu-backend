@@ -23,11 +23,6 @@ public class Usuario implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @JsonProperty("cpf")
-    @Column(length = 200)
-    @NotNull(message = "cpf obrigatorio")
-    private String cpf;
-
     @JsonProperty("nomeCompleto")
     @Column(length = 200)
     @NotNull(message = "nome obrigatorio")
@@ -201,15 +196,6 @@ public class Usuario implements Serializable {
     @ApiModelProperty(value = "Status Usuario")
 
 
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -238,7 +224,6 @@ public class Usuario implements Serializable {
         sb.append("class Usuario {\n");
 
         sb.append("    id: ").append(toIndentedString(id)).append("\n");
-        sb.append("    cpf: ").append(toIndentedString(cpf)).append("\n");
         sb.append("    nomeCompleto: ").append(toIndentedString(nomeCompleto)).append("\n");
         sb.append("    email: ").append(toIndentedString(email)).append("\n");
         sb.append("    senha: ").append(toIndentedString(senha)).append("\n");

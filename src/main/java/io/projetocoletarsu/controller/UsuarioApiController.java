@@ -30,27 +30,32 @@ public class UsuarioApiController implements UsuarioApi {
 
 
     public ResponseEntity<Retorno> criarUsuario(@ApiParam(value = "Novo Usuario", required = true) @Valid @RequestBody Usuario usuario) {
+        Retorno retorno = new Retorno(false, "");
+
         try {
             RetornoUsuario retornoService = service.criarUsuario(usuario);
 
             if (retornoService.isSucesso()) {
-                return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(retornoService.getId())
-                        .toUri()).build();
+                return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()
+                        .path("/{id}").buildAndExpand(retornoService.getId()).toUri()).build();
             } else {
-                return ResponseEntity.unprocessableEntity().body(new Retorno(false, "Erro ao criar usuario"));
+                retorno.setMensagem(retornoService.getMensagem());
+                return ResponseEntity.unprocessableEntity().body(retorno);
             }
 
-        } catch (ApiException e) {
+        } catch (Exception e) {
             return ResponseEntity.unprocessableEntity().body(new Retorno(false, "Erro ao criar usuario"));
         }
     }
 
     public ResponseEntity<RetornoTodosUsuarios> buscarTodosUsuarios() {
+
         try {
             return ResponseEntity.ok(service.buscarTodosUsuarios());
 
         } catch (ApiException e) {
             return ResponseEntity.unprocessableEntity().body(new RetornoTodosUsuarios(false, "Erro ao buscar usuarios", null));
+
         }
     }
 
@@ -58,6 +63,7 @@ public class UsuarioApiController implements UsuarioApi {
 
         try {
             RetornoUsuario retorno = service.buscarUsuarioPorId(idUsuario);
+
             if (retorno.isSucesso()) {
                 return ResponseEntity.ok(retorno);
             } else {

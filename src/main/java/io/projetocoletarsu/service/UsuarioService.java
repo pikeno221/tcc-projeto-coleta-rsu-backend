@@ -37,7 +37,7 @@ public class UsuarioService {
 
             } else {
                 retorno.setSucesso(false);
-                retorno.setMensagem("Usuario ja existente");
+                retorno.setMensagem("Usuario, Email, Telefone ja existente");
             }
 
             return retorno;
@@ -181,7 +181,7 @@ public class UsuarioService {
 
 
     private boolean usuarioValidoParaInsercao(Usuario usuario) {
-        return !repository.findByNomeCompletoOrCpfOrCelularOrEmail(usuario.getNomeCompleto(), usuario.getCpf(), usuario.getCelular(), usuario.getEmail()).isPresent();
+        return !repository.findByNomeCompletoOrCelularOrEmail(usuario.getNomeCompleto(), usuario.getCelular(), usuario.getEmail()).isPresent();
     }
 
     private Usuario buscarUsuarioPorTelefone(String celular) {
@@ -208,9 +208,6 @@ public class UsuarioService {
         if (usuarioDto.getEmail() != null && !usuarioDto.getEmail().isEmpty())
             usuarioBanco.setEmail(usuarioDto.getEmail());
 
-
-        if (usuarioDto.getCpf() != null && !usuarioDto.getCpf().isEmpty())
-            usuarioBanco.setCpf(usuarioDto.getCpf());
 
         if (usuarioDto.getEndereco() != null && !usuarioDto.getEndereco().isEmpty())
             usuarioBanco.setEndereco(usuarioDto.getEndereco());
