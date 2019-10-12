@@ -79,7 +79,7 @@ public interface UsuarioApi {
     ResponseEntity<Void> deletarUsuario(@ApiParam(value = "Id do Usuario", required = true) @PathVariable("idUsuario") Integer idUsuario);
 
 
-    @ApiOperation(value = "Logar do Usuario", nickname = "logarUsuario", notes = "endpoint que loga um usuario na aplicacao.", response = Retorno.class, tags = {"usuario",})
+    @ApiOperation(value = "Logar do Usuario", nickname = "logarUsuario", notes = "endpoint que loga um usuario na aplicacao.", response = RetornoUsuario.class, tags = {"usuario",})
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "sucesso ao realizar login", response = Retorno.class),
             @ApiResponse(code = 400, message = "Campos invalidos enviados na request", response = Retorno.class),
@@ -88,7 +88,7 @@ public interface UsuarioApi {
     @RequestMapping(value = "/usuarios/login",
             produces = {"application/json"},
             method = RequestMethod.GET)
-    ResponseEntity<RetornoUsuario> logarUsuario(@ApiParam(value = "Email do Usuario", required = true) @RequestHeader(value = "usuario", required = true) String usuario, @ApiParam(value = "Senha do Usuario", required = true) @RequestHeader(value = "senha", required = true) String senha);
+    ResponseEntity<RetornoUsuario> logarUsuario(@ApiParam(value = "Email do Usuario", required = true) @RequestHeader(value = "email", required = true) String email, @ApiParam(value = "Senha do Usuario", required = true) @RequestHeader(value = "senha", required = true) String senha);
 
     @ApiOperation(value = "Recuperar Senha do Usuario", nickname = "recuperarSenha", notes = "endpoint que envia senha para o email do usuario.", response = Retorno.class, tags = {"usuario",})
     @ApiResponses(value = {

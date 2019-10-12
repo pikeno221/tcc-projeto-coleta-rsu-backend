@@ -44,7 +44,7 @@ public class UsuarioApiController implements UsuarioApi {
             }
 
         } catch (Exception e) {
-            return ResponseEntity.unprocessableEntity().body(new Retorno(false, "Erro ao criar usuario"));
+            return ResponseEntity.unprocessableEntity().body(new Retorno(false, e.getMessage()));
         }
     }
 
@@ -54,7 +54,7 @@ public class UsuarioApiController implements UsuarioApi {
             return ResponseEntity.ok(service.buscarTodosUsuarios());
 
         } catch (ApiException e) {
-            return ResponseEntity.unprocessableEntity().body(new RetornoTodosUsuarios(false, "Erro ao buscar usuarios", null));
+            return ResponseEntity.unprocessableEntity().body(new RetornoTodosUsuarios(false, e.getMessage(), null));
 
         }
     }
@@ -71,7 +71,7 @@ public class UsuarioApiController implements UsuarioApi {
 
 
         } catch (ApiException e) {
-            return ResponseEntity.unprocessableEntity().body(new RetornoUsuario(false, "Erro ao buscar usuario", null, null));
+            return ResponseEntity.unprocessableEntity().body(new RetornoUsuario(false, e.getMessage(), null, null));
 
         }
     }
@@ -87,7 +87,7 @@ public class UsuarioApiController implements UsuarioApi {
                 return ResponseEntity.unprocessableEntity().body(retorno);
             }
         } catch (ApiException e) {
-            return ResponseEntity.unprocessableEntity().body(new RetornoUsuario(false, "Erro ao atualizar usuario", null, null));
+            return ResponseEntity.unprocessableEntity().body(new RetornoUsuario(false, e.getMessage(), idUsuario, null));
         }
     }
 
@@ -104,18 +104,19 @@ public class UsuarioApiController implements UsuarioApi {
                     return ResponseEntity.ok().build();
 
                 }
+            } else {
+
             }
         } catch (Exception e) {
-            return ResponseEntity.unprocessableEntity().build();
-
+            log.error("error ao fazer request", e);
         }
+        return ResponseEntity.unprocessableEntity().build();
 
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<RetornoUsuario> logarUsuario(@ApiParam(value = "Email do Usuario", required = true) @RequestHeader(value = "usuario", required = true) String usuario, @ApiParam(value = "Senha do Usuario", required = true) @RequestHeader(value = "senha", required = true) String senha) {
+    public ResponseEntity<RetornoUsuario> logarUsuario(@ApiParam(value = "Email do Usuario", required = true) @RequestHeader(value = "email", required = true) String email, @ApiParam(value = "Senha do Usuario", required = true) @RequestHeader(value = "senha", required = true) String senha) {
         try {
-            RetornoUsuario retorno = service.logarUsuario(usuario, senha);
+            RetornoUsuario retorno = service.logarUsuario(email, senha);
 
             if (retorno.isSucesso()) {
                 return ResponseEntity.ok(retorno);
@@ -124,7 +125,7 @@ public class UsuarioApiController implements UsuarioApi {
             }
 
         } catch (ApiException e) {
-            return ResponseEntity.unprocessableEntity().body(new RetornoUsuario(false, "Usuario e senha incorreto", null, null));
+            return ResponseEntity.unprocessableEntity().body(new RetornoUsuario(false, e.getMessage(), null, null));
         }
     }
 
@@ -142,7 +143,7 @@ public class UsuarioApiController implements UsuarioApi {
             }
         } catch (Exception e) {
 
-            return ResponseEntity.unprocessableEntity().body(new Retorno(false, " error ao recuperar a senha"));
+            return ResponseEntity.unprocessableEntity().body(new Retorno(false, e.getMessage()));
 
         }
 

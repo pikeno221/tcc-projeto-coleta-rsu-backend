@@ -114,7 +114,7 @@ public class UsuarioService {
             return retorno;
 
         } catch (Exception e) {
-            log.error("Erro ao atualizar os dados", e);
+            log.error("Erro ao atualizar os dados do usuário", e);
             throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Erro ao buscar os dados.");
 
         }
@@ -151,7 +151,7 @@ public class UsuarioService {
         Optional<Usuario> usuario = null;
 
         try {
-            usuario = repository.findByEmailAndSenha(usuario, senha);
+            usuario = repository.findByEmailAndSenha(email, senha);
 
             if (usuario.isPresent()) {
                 return new RetornoUsuario(true, "Sucesso ao buscar Usuario", usuario.get().getId(), usuario.get());
@@ -160,7 +160,7 @@ public class UsuarioService {
             }
 
         } catch (Exception e) {
-            throw new ApiException(422, "Erro ao realizar delecao do usuario");
+            throw new ApiException(422, "Erro ao buscar usuário na base de dados");
 
         }
 
@@ -181,16 +181,15 @@ public class UsuarioService {
 
 
     private boolean usuarioValidoParaInsercao(Usuario usuario) {
-        return !repository.findByNomeCompletoOrCelularOrEmail(usuario.getNomeCompleto(), usuario.getCelular(), usuario.getEmail()).isPresent();
+        return true; //!repository.findByNomeCompletoOrCelularOrEmail(usuario.getNomeCompleto(), usuario.getCelular(), usuario.getEmail()).isPresent();
     }
 
     private Usuario buscarUsuarioPorTelefone(String celular) {
         return repository.findByCelular(celular).get();
     }
 
-    public Usuario buscarUsuarioPorCpf(String cpf) {
-        return repository.findByCpf(cpf).get();
-    }
+
+
 
     public Usuario buscarUsuarioPorEmail(String email) {
         return repository.findByEmail(email).get();
