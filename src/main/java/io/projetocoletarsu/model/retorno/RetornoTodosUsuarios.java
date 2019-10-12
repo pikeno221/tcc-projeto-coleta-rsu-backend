@@ -8,6 +8,7 @@ public class RetornoTodosUsuarios extends Retorno {
 
     private List<Usuario> usuarios;
 
+
     public RetornoTodosUsuarios(Boolean sucesso, String mensagem, List<Usuario> usuarios) {
         super(sucesso, mensagem);
         this.usuarios = usuarios;

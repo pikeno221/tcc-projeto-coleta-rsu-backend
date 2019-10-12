@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@Api(value = "usuario", description = "the usuario API")
+@Api(value = "usuarios", description = "the usuario API")
 public interface UsuarioApi {
 
     @ApiOperation(value = "Atualizar um Usuario existente", nickname = "atualizarUsuario", notes = "endpoint que atualiza um usuario na base de dados.", response = Retorno.class, tags = {"usuario",})

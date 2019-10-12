@@ -1,12 +1,15 @@
 package io.projetocoletarsu.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.projetocoletarsu.model.enums.StatusUsuario;
+import io.projetocoletarsu.model.enums.TipoPessoa;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
+
 
 /**
  * Usuario
