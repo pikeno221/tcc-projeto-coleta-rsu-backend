@@ -46,11 +46,25 @@ public class Usuario implements Serializable {
     @JsonProperty("endereco")
     @Column(length = 300)
     @NotNull(message = "endereco obrigatorio")
-    private String endereco;
+    private String endereco = null;
+
+    @JsonProperty("tipoPessoa")
+    @NotNull(message = "tipoPessoa obrigatorio")
+    private TipoPessoa tipoPessoa = null;
 
     @JsonProperty("statusUsuario")
     @NotNull(message = "statusUsuario obrigatorio")
     private StatusUsuario statusUsuario = null;
+
+
+    public TipoPessoa getTipoPessoa() {
+        return tipoPessoa;
+    }
+
+    public void setTipoPessoa(TipoPessoa tipoPessoa) {
+        this.tipoPessoa = tipoPessoa;
+    }
+
 
     public Usuario id(Integer id) {
         this.id = id;
