@@ -76,7 +76,7 @@ public class UsuarioApiController implements UsuarioApi {
         }
     }
 
-    public ResponseEntity<RetornoUsuario> atualizarUsuario(@ApiParam(value = "Usuario atualizado", required = true) @RequestBody Usuario usuario, @ApiParam(value = "ID do Usuario", required = true) @PathVariable("idUsuario") Integer idUsuario) {
+    public ResponseEntity<RetornoUsuario> atualizarUsuario(@ApiParam(value = "Usuario atualizado", required = true) @Valid @RequestBody Usuario usuario, @ApiParam(value = "ID do Usuario", required = true) @PathVariable("idUsuario") Integer idUsuario) {
 
         try {
             RetornoUsuario retorno = service.atualizarUsuario(idUsuario, usuario);
