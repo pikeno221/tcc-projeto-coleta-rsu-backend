@@ -1,14 +1,14 @@
 package io.projetocoletarsu.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.projetocoletarsu.model.enums.StatusUsuario;
 import io.projetocoletarsu.model.enums.TipoPessoa;
-import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.List;
 
 
 /**
@@ -59,28 +59,22 @@ public class Usuario implements Serializable {
     @NotNull(message = "statusUsuario obrigatorio")
     private StatusUsuario statusUsuario = null;
 
+    @JsonIgnore
+    @OneToMany
+    private List<Agendamento> agendamentos = null;
 
-    public TipoPessoa getTipoPessoa() {
-        return tipoPessoa;
+    public Usuario() {
     }
 
-    public void setTipoPessoa(TipoPessoa tipoPessoa) {
+    public Usuario(@NotNull(message = "nome obrigatorio") String nomeCompleto, @NotNull(message = "email obrigatorio") String email, @NotNull(message = "senha obrigatorio") String senha, @NotNull(message = "celular obrigatorio") String celular, @NotNull(message = "endereco obrigatorio") String endereco, @NotNull(message = "tipoPessoa obrigatorio") TipoPessoa tipoPessoa, @NotNull(message = "statusUsuario obrigatorio") StatusUsuario statusUsuario) {
+        this.nomeCompleto = nomeCompleto;
+        this.email = email;
+        this.senha = senha;
+        this.celular = celular;
+        this.endereco = endereco;
         this.tipoPessoa = tipoPessoa;
+        this.statusUsuario = statusUsuario;
     }
-
-
-    public Usuario id(Integer id) {
-        this.id = id;
-        return this;
-    }
-
-    /**
-     * Get id
-     *
-     * @return id
-     **/
-    @ApiModelProperty(value = "")
-
 
     public Integer getId() {
         return id;
@@ -90,19 +84,6 @@ public class Usuario implements Serializable {
         this.id = id;
     }
 
-    public Usuario nomeCompleto(String nomeCompleto) {
-        this.nomeCompleto = nomeCompleto;
-        return this;
-    }
-
-    /**
-     * Get nomeCompleto
-     *
-     * @return nomeCompleto
-     **/
-    @ApiModelProperty(value = "")
-
-
     public String getNomeCompleto() {
         return nomeCompleto;
     }
@@ -110,19 +91,6 @@ public class Usuario implements Serializable {
     public void setNomeCompleto(String nomeCompleto) {
         this.nomeCompleto = nomeCompleto;
     }
-
-    public Usuario email(String email) {
-        this.email = email;
-        return this;
-    }
-
-    /**
-     * Get email
-     *
-     * @return email
-     **/
-    @ApiModelProperty(value = "")
-
 
     public String getEmail() {
         return email;
@@ -132,19 +100,6 @@ public class Usuario implements Serializable {
         this.email = email;
     }
 
-    public Usuario senha(String senha) {
-        this.senha = senha;
-        return this;
-    }
-
-    /**
-     * Get senha
-     *
-     * @return senha
-     **/
-    @ApiModelProperty(value = "")
-
-
     public String getSenha() {
         return senha;
     }
@@ -152,19 +107,6 @@ public class Usuario implements Serializable {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-
-    public Usuario celular(String celular) {
-        this.celular = celular;
-        return this;
-    }
-
-    /**
-     * Get celular
-     *
-     * @return celular
-     **/
-    @ApiModelProperty(value = "")
-
 
     public String getCelular() {
         return celular;
@@ -174,27 +116,20 @@ public class Usuario implements Serializable {
         this.celular = celular;
     }
 
-    public Usuario endereco(String endereco) {
-        this.endereco = endereco;
-        return this;
-    }
-
-    /**
-     * Get endereco
-     *
-     * @return endereco
-     **/
-
-
-    @ApiModelProperty(value = "")
-
-
     public String getEndereco() {
         return endereco;
     }
 
     public void setEndereco(String endereco) {
         this.endereco = endereco;
+    }
+
+    public TipoPessoa getTipoPessoa() {
+        return tipoPessoa;
+    }
+
+    public void setTipoPessoa(TipoPessoa tipoPessoa) {
+        this.tipoPessoa = tipoPessoa;
     }
 
     public StatusUsuario getStatusUsuario() {
@@ -205,61 +140,12 @@ public class Usuario implements Serializable {
         this.statusUsuario = statusUsuario;
     }
 
-    /**
-     * Status Usuario
-     *
-     * @return statusUsuario
-     **/
-    @ApiModelProperty(value = "Status Usuario")
-
-
-    @Override
-    public boolean equals(java.lang.Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Usuario usuario = (Usuario) o;
-        return Objects.equals(this.nomeCompleto, usuario.nomeCompleto) &&
-                Objects.equals(this.email, usuario.email) &&
-                Objects.equals(this.senha, usuario.senha) &&
-                Objects.equals(this.celular, usuario.celular) &&
-                Objects.equals(this.endereco, usuario.endereco) &&
-                Objects.equals(this.statusUsuario, usuario.statusUsuario);
+    public List<Agendamento> getAgendamentos() {
+        return agendamentos;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, nomeCompleto, email, senha, celular, endereco, statusUsuario);
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("class Usuario {\n");
-
-        sb.append("    id: ").append(toIndentedString(id)).append("\n");
-        sb.append("    nomeCompleto: ").append(toIndentedString(nomeCompleto)).append("\n");
-        sb.append("    email: ").append(toIndentedString(email)).append("\n");
-        sb.append("    senha: ").append(toIndentedString(senha)).append("\n");
-        sb.append("    celular: ").append(toIndentedString(celular)).append("\n");
-        sb.append("    endereco: ").append(toIndentedString(endereco)).append("\n");
-        sb.append("    statusUsuario: ").append(toIndentedString(statusUsuario)).append("\n");
-        sb.append("}");
-        return sb.toString();
-    }
-
-    /**
-     * Convert the given object to string with each line indented by 4 spaces
-     * (except the first line).
-     */
-    private String toIndentedString(java.lang.Object o) {
-        if (o == null) {
-            return "null";
-        }
-        return o.toString().replace("\n", "\n    ");
+    public void setAgendamentos(List<Agendamento> agendamentos) {
+        this.agendamentos = agendamentos;
     }
 }
 
