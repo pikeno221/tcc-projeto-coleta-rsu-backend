@@ -3,7 +3,6 @@ package io.projetocoletarsu.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.projetocoletarsu.model.enums.StatusColeta;
-import io.projetocoletarsu.model.AgendamentoDTO;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -130,7 +129,4 @@ public class Agendamento implements Serializable {
         this.dataConclusao = dataConclusao;
     }
 
-    public Agendamento dtoToObject(AgendamentoDTO agendamentoDTO, Usuario usuario) {
-        return new Agendamento(agendamentoDTO.getStatus(), usuario, agendamentoDTO.getMateriaisColeta(), agendamentoDTO.getObservacoesUsuario(), agendamentoDTO.getObservacoesSistema(), agendamentoDTO.getDataAgendada(), agendamentoDTO.getDataConclusao());
-    }
 }
