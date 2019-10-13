@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 
 public enum MaterialColeta {
 
-    PLASTICO(1, "Plástico"), VIDRO(2, "Vidro"), PAPEL(3, "Papel"), ALUMINIO(4, "Alumínio"), ORGANICOS(5, "Organicos");
+    PLASTICO(1, "Plástico"), VIDRO(2, "Vidro"), PAPEL(3, "Papel"), ALUMINIO(4, "Alumínio"), ORGANICOS(5, "Organicos"), METAL(6, "Metal");
 
     private Integer codigo;
     private String descricao;

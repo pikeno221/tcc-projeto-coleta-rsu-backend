@@ -2,7 +2,6 @@ package io.projetocoletarsu.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.projetocoletarsu.model.enums.MaterialColeta;
 import io.projetocoletarsu.model.enums.StatusColeta;
 
 import javax.persistence.*;
@@ -30,9 +29,8 @@ public class Agendamento implements Serializable {
     private Usuario usuario;
 
 
-    @JsonProperty("materialColeta")
-    @NotNull(message = "materialColeta obrigatorio")
-    private MaterialColeta materialColeta;
+    @JsonProperty("materiaisColeta")
+    private String materiaisColeta;
 
     @JsonProperty("observacoesUsuario")
     @Column(length = 500)
@@ -57,10 +55,10 @@ public class Agendamento implements Serializable {
 
     }
 
-    public Agendamento(StatusColeta status, Usuario usuario, @NotNull(message = "materialColeta obrigatorio") MaterialColeta materialColeta, String observacoesUsuario, String observacoesSistema, @NotNull(message = "dataAgendada obrigatorio") Date dataAgendada, Date dataConclusao) {
+    public Agendamento(StatusColeta status, Usuario usuario, String materiaisColeta, String observacoesUsuario, String observacoesSistema, @NotNull(message = "dataAgendada obrigatorio") Date dataAgendada, Date dataConclusao) {
         this.status = status;
         this.usuario = usuario;
-        this.materialColeta = materialColeta;
+        this.materiaisColeta = materiaisColeta;
         this.observacoesUsuario = observacoesUsuario;
         this.observacoesSistema = observacoesSistema;
         this.dataAgendada = dataAgendada;
@@ -91,12 +89,12 @@ public class Agendamento implements Serializable {
         this.usuario = usuario;
     }
 
-    public MaterialColeta getMaterialColeta() {
-        return materialColeta;
+    public String getMateriaisColeta() {
+        return materiaisColeta;
     }
 
-    public void setMaterialColeta(MaterialColeta materialColeta) {
-        this.materialColeta = materialColeta;
+    public void setMateriaisColeta(String materiaisColeta) {
+        this.materiaisColeta = materiaisColeta;
     }
 
     public String getObservacoesUsuario() {
@@ -132,6 +130,6 @@ public class Agendamento implements Serializable {
     }
 
     public Agendamento dtoToObject(AgendamentoDTO agendamentoDTO, Usuario usuario) {
-        return new Agendamento(agendamentoDTO.getStatus(), usuario,agendamentoDTO.getMaterialColeta(), agendamentoDTO.getObservacoesUsuario(), agendamentoDTO.getObservacoesSistema(), agendamentoDTO.getDataAgendada(), agendamentoDTO.getDataConclusao());
+        return new Agendamento(agendamentoDTO.getStatus(), usuario, agendamentoDTO.getMateriaisColeta(), agendamentoDTO.getObservacoesUsuario(), agendamentoDTO.getObservacoesSistema(), agendamentoDTO.getDataAgendada(), agendamentoDTO.getDataConclusao());
     }
 }

@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 
 public enum TipoPessoa {
 
-    PESSOA_FISICA(1, "Pessoa Física"), ATIVO(2, "PESSOA JURIDICA");
+    PESSOA_FISICA(1, "Pessoa Física"), PESSOA_JURIDICA(2, "PESSOA JURIDICA");
 
     private Integer codigo;
     private String descricao;
