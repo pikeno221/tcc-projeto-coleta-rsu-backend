@@ -28,7 +28,7 @@ public interface UsuarioApi {
             produces = {"application/json"},
             consumes = {"application/json"},
             method = RequestMethod.PUT)
-    ResponseEntity<RetornoUsuario> atualizarUsuario(@ApiParam(value = "Usuario atualizado", required = true) @Valid @RequestBody Usuario body, @ApiParam(value = "ID do Usuario", required = true) @PathVariable("idUsuario") Integer idUsuario);
+    ResponseEntity<RetornoUsuario> atualizarUsuario(@ApiParam(value = "Usuario atualizado", required = true) @RequestBody Usuario body, @ApiParam(value = "ID do Usuario", required = true) @PathVariable("idUsuario") Integer idUsuario);
 
 
     @ApiOperation(value = "Buscar todos Usuarios", nickname = "buscarTodosUsuarios", notes = "endpoint que busca todos usuarios da base de dados.", response = Usuario.class, responseContainer = "List", tags = {"usuario",})
