@@ -112,4 +112,27 @@ public class AgendamentoService {
 
         return retorno;
     }
+
+    public RetornoAgendamento deletarAgendamento(Integer id) throws ApiException {
+        RetornoAgendamento retorno = new RetornoAgendamento();
+
+        Optional<Agendamento> agendamentoBanco = repository.findById(id);
+
+        if (agendamentoBanco.isPresent()) {
+            try {
+                repository.delete(agendamentoBanco.get());
+                retorno.setSucesso(true);
+                retorno.setMensagem("Sucesso ao realizar delecao do agendamento");
+
+            } catch (Exception e) {
+                log.error("Error ao excluir agendamento.", e);
+                throw new ApiException(422, "Erro ao realizar delecao do agendamento");
+            }
+        } else {
+            retorno.setSucesso(false);
+            retorno.setMensagem("Agendamento não encontrado");
+        }
+
+        return retorno;
+    }
 }

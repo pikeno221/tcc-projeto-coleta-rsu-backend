@@ -8,6 +8,8 @@ import io.projetocoletarsu.model.retorno.RetornoAgendamentos;
 import io.projetocoletarsu.service.AgendamentoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,8 @@ import javax.validation.Valid;
 @RequestMapping("/agendamentos")
 @Api(value = "agendamentos", description = "")
 public class AgendamentoController {
+
+    private static final Logger log = LoggerFactory.getLogger(AgendamentoController.class);
 
     @Autowired
     private AgendamentoService service;
@@ -82,6 +86,21 @@ public class AgendamentoController {
         if (!token.equals("123")) {
             throw new ApiException(422, "Token Inválida! ");
         }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarAgendamento(@ApiParam(value = "token", required = true) @RequestHeader String token, @ApiParam(value = "Id do Agendamento", required = true) @PathVariable Integer id) {
+        try {
+            tokenValida(token);
+            RetornoAgendamento retorno = service.deletarAgendamento(id);
+
+            if (retorno.isSucesso()) {
+                return ResponseEntity.noContent().build();
+            }
+        } catch (Exception e) {
+            log.error("error ao fazer request", e);
+        }
+        return ResponseEntity.unprocessableEntity().build();
     }
 
 }
