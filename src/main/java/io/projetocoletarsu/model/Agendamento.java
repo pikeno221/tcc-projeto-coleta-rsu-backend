@@ -3,6 +3,7 @@ package io.projetocoletarsu.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.projetocoletarsu.model.enums.StatusColeta;
+import io.projetocoletarsu.model.AgendamentoDTO;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
