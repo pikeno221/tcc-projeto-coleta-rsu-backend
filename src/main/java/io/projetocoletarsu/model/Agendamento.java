@@ -130,4 +130,8 @@ public class Agendamento implements Serializable {
     public void setDataConclusao(Date dataConclusao) {
         this.dataConclusao = dataConclusao;
     }
+
+    public Agendamento dtoToObject(AgendamentoDTO agendamentoDTO, Usuario usuario) {
+        return new Agendamento(agendamentoDTO.getStatus(), usuario,agendamentoDTO.getMaterialColeta(), agendamentoDTO.getObservacoesUsuario(), agendamentoDTO.getObservacoesSistema(), agendamentoDTO.getDataAgendada(), agendamentoDTO.getDataConclusao());
+    }
 }

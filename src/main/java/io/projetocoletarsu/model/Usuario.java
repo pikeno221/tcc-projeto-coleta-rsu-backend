@@ -60,7 +60,7 @@ public class Usuario implements Serializable {
     private StatusUsuario statusUsuario = null;
 
     @JsonIgnore
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private List<Agendamento> agendamentos = null;
 
     public Usuario() {
