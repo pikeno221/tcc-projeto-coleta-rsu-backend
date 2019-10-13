@@ -4,7 +4,7 @@ import io.projetocoletarsu.exception.ApiException;
 import io.projetocoletarsu.model.Agendamento;
 import io.projetocoletarsu.model.AgendamentoDTO;
 import io.projetocoletarsu.model.retorno.RetornoAgendamento;
-import io.projetocoletarsu.model.retorno.RetornoTodosAgendamentos;
+import io.projetocoletarsu.model.retorno.RetornoAgendamentos;
 import io.projetocoletarsu.model.retorno.RetornoUsuario;
 import io.projetocoletarsu.repository.AgendamentoRepository;
 import org.slf4j.Logger;
@@ -12,6 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AgendamentoService {
@@ -25,8 +28,8 @@ public class AgendamentoService {
     private static final Logger log = LoggerFactory.getLogger(UsuarioService.class);
 
 
-    public RetornoTodosAgendamentos buscarTodosAgendamentos() throws ApiException {
-        RetornoTodosAgendamentos retorno = new RetornoTodosAgendamentos();
+    public RetornoAgendamentos buscarTodosAgendamentos() throws ApiException {
+        RetornoAgendamentos retorno = new RetornoAgendamentos();
 
         try {
             retorno.setAgendamentos(repository.findAll());
@@ -85,4 +88,28 @@ public class AgendamentoService {
         return true;
     }
 
+    public RetornoAgendamentos buscarAgendamentosPorUsuario(Integer idUsuario) throws ApiException {
+        RetornoAgendamentos retorno = new RetornoAgendamentos();
+        Optional<List<Agendamento>> agendamentos;
+
+        try {
+            agendamentos = repository.findAgendamentosByUsuarioIdOrderByDataAgendada(idUsuario);
+
+        } catch (Exception e) {
+            log.error("Error ao buscar os dados", e);
+            throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Erro ao buscar os dados.");
+
+        }
+
+        if (agendamentos.isPresent()) {
+            retorno.setAgendamentos(agendamentos.get());
+            retorno.setMensagem("Sucesso ao buscar agendamentos");
+            retorno.setSucesso(true);
+        } else {
+            retorno.setAgendamentos(null);
+            retorno.setMensagem("Nenhum Agendamento Encontrado");
+        }
+
+        return retorno;
+    }
 }
