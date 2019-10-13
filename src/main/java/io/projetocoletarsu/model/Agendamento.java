@@ -55,6 +55,8 @@ public class Agendamento implements Serializable {
 
     }
 
+
+
     public Agendamento(StatusColeta status, Usuario usuario, String materiaisColeta, String observacoesUsuario, String observacoesSistema, @NotNull(message = "dataAgendada obrigatorio") Date dataAgendada, Date dataConclusao) {
         this.status = status;
         this.usuario = usuario;
