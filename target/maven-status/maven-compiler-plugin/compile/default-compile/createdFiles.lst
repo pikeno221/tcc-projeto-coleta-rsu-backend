@@ -8,7 +8,6 @@ io/projetocoletarsu/controller/UsuarioApiController.class
 io/projetocoletarsu/model/AgendamentoDTO.class
 io/projetocoletarsu/service/EmailService.class
 io/projetocoletarsu/repository/UsuarioRepository.class
-io/projetocoletarsu/model/retorno/RetornoTodosAgendamentos.class
 io/projetocoletarsu/model/Agendamento.class
 io/projetocoletarsu/model/enums/StatusUsuario.class
 io/projetocoletarsu/service/AgendamentoService.class
