@@ -3,8 +3,6 @@ sudo: true
 jdk:
   - oraclejdk9
 before_install:
-  - chmod a+x ./mvnw
-  - chmod +x mvnw
   - mysql -e 'CREATE DATABASE coleta_rsu;'
 services:
   - mysql
