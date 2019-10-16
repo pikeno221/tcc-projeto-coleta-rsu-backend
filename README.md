@@ -1,6 +1,4 @@
-[![Build Status](https://travis-ci.org/pikeno221/tcc-projeto-coleta-rsu-backend
-.svg?branch=master)](https://travis-ci.org/pikeno221/tcc-projeto-coleta-rsu-backend
-)
+[![Build Status](https://travis-ci.org/pikeno221/tcc-projeto-coleta-rsu-backend.svg?branch=master)](https://travis-ci.org/pikeno221/tcc-projeto-coleta-rsu-backend)
 
 # Coleta RSU Backend
 
