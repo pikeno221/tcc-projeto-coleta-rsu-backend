@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/pikeno221/tcc-projeto-coleta-rsu-backend.svg?branch=master)](https://travis-ci.org/pikeno221/tcc-projeto-coleta-rsu-backend)
+
 # Coleta RSU Backend
 
 Project created to build a solution of logistical difficulty of reusable wast collection company
