@@ -3,6 +3,10 @@ package io.projetocoletarsu.service;
 import io.projetocoletarsu.exception.ApiException;
 import io.projetocoletarsu.model.Agendamento;
 import io.projetocoletarsu.model.AgendamentoDTO;
+import io.projetocoletarsu.model.Usuario;
+import io.projetocoletarsu.model.enums.StatusColeta;
+import io.projetocoletarsu.model.request.AtualizacaoStatusColetaRequest;
+import io.projetocoletarsu.model.retorno.Retorno;
 import io.projetocoletarsu.model.retorno.RetornoAgendamento;
 import io.projetocoletarsu.model.retorno.RetornoAgendamentos;
 import io.projetocoletarsu.model.retorno.RetornoUsuario;
@@ -134,5 +138,59 @@ public class AgendamentoService {
         }
 
         return retorno;
+    }
+
+    public RetornoAgendamento atualizarStatusColetaAgendamento(Integer id, AtualizacaoStatusColetaRequest statusColeta) throws ApiException {
+        try {
+            RetornoAgendamento retorno;
+
+            retorno = buscarAgendamentoPorId(id);
+
+            retorno.getAgendamento().setStatus(statusColeta.getStatusColeta());
+            if (retorno.isSucesso()) {
+                retorno.setAgendamento(repository.save(retorno.getAgendamento()));
+                retorno.setSucesso(true);
+                retorno.setMensagem("Status Coleta atualizado com sucesso");
+            }
+
+            return retorno;
+
+        } catch (Exception e) {
+            log.error("Erro ao atualizar o status do agendamento", e);
+            throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Erro ao buscar os dados.");
+
+        }
+
+
+
+
+
+    }
+
+    public RetornoAgendamento buscarAgendamentoPorId(Integer id) throws ApiException {
+        RetornoAgendamento retorno = new RetornoAgendamento();
+        Optional<Agendamento> agendamento;
+
+        try {
+            agendamento = repository.findById(id);
+
+        } catch (Exception e) {
+            log.error("Erro ao buscar os dados", e);
+            throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Erro ao buscar os dados.");
+
+        }
+
+        if (agendamento.isPresent()) {
+            retorno.setAgendamento(agendamento.get());
+            retorno.setMensagem("Sucesso ao buscar agendamento");
+            retorno.setSucesso(true);
+        } else {
+            retorno.setAgendamento(null);
+            retorno.setMensagem("Agendamento não encontrado");
+            retorno.setSucesso(false);
+        }
+
+        return retorno;
+
     }
 }

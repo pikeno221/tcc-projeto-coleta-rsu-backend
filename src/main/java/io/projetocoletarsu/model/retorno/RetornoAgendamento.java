@@ -7,7 +7,6 @@ public class RetornoAgendamento extends Retorno {
 
     @JsonIgnore
     private Integer id;
-
     private Agendamento agendamento;
 
     public RetornoAgendamento() {

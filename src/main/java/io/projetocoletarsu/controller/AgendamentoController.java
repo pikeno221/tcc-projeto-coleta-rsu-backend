@@ -2,6 +2,8 @@ package io.projetocoletarsu.controller;
 
 import io.projetocoletarsu.exception.ApiException;
 import io.projetocoletarsu.model.AgendamentoDTO;
+import io.projetocoletarsu.model.enums.StatusColeta;
+import io.projetocoletarsu.model.request.AtualizacaoStatusColetaRequest;
 import io.projetocoletarsu.model.retorno.Retorno;
 import io.projetocoletarsu.model.retorno.RetornoAgendamento;
 import io.projetocoletarsu.model.retorno.RetornoAgendamentos;
@@ -82,10 +84,19 @@ public class AgendamentoController {
 
     }
 
-    private void tokenValida(String token) throws ApiException {
-        if (!token.equals("123")) {
-            throw new ApiException(422, "Token Inválida! ");
+    @GetMapping("/{id}")
+    public ResponseEntity<RetornoAgendamento> buscarAgendamentoPorId(@ApiParam(value = "token", required = true) @RequestHeader String token, @ApiParam(value = "Id do Agendamento", required = true) @PathVariable Integer id) {
+        try {
+            tokenValida(token);
+            RetornoAgendamento retorno = service.buscarAgendamentoPorId(id);
+
+            if (retorno.isSucesso()) {
+                return ResponseEntity.ok(retorno);
+            }
+        } catch (Exception e) {
+            log.error("error ao fazer request", e);
         }
+        return ResponseEntity.unprocessableEntity().build();
     }
 
     @DeleteMapping("/{id}")
@@ -103,6 +114,29 @@ public class AgendamentoController {
         return ResponseEntity.unprocessableEntity().build();
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<RetornoAgendamento> atualizarStatusColetaAgendamento(@ApiParam(value = "token", required = true) @RequestHeader String token, @ApiParam(value = "Novo Status do Agendamento", required = true) @RequestBody AtualizacaoStatusColetaRequest statusColeta, @ApiParam(value = "Id do Agendamento", required = true) @PathVariable Integer id) {
+        try {
+            tokenValida(token);
+            RetornoAgendamento retorno = service.atualizarStatusColetaAgendamento(id, statusColeta);
+
+            if (retorno.isSucesso()) {
+                return ResponseEntity.ok(retorno);
+            } else {
+                return ResponseEntity.unprocessableEntity().body(retorno);
+            }
+        } catch (Exception e) {
+            log.error("Error ao fazer request", e);
+        }
+        return ResponseEntity.unprocessableEntity().build();
+    }
+
+
+    private void tokenValida(String token) throws ApiException {
+        if (!token.equals("123")) {
+            throw new ApiException(422, "Token Inválida! ");
+        }
+    }
 }
 
 
