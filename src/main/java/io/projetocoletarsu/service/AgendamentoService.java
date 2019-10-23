@@ -3,10 +3,8 @@ package io.projetocoletarsu.service;
 import io.projetocoletarsu.exception.ApiException;
 import io.projetocoletarsu.model.Agendamento;
 import io.projetocoletarsu.model.AgendamentoDTO;
-import io.projetocoletarsu.model.Usuario;
 import io.projetocoletarsu.model.enums.StatusColeta;
 import io.projetocoletarsu.model.request.AtualizacaoStatusColetaRequest;
-import io.projetocoletarsu.model.retorno.Retorno;
 import io.projetocoletarsu.model.retorno.RetornoAgendamento;
 import io.projetocoletarsu.model.retorno.RetornoAgendamentos;
 import io.projetocoletarsu.model.retorno.RetornoUsuario;
@@ -17,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -140,13 +139,14 @@ public class AgendamentoService {
         return retorno;
     }
 
-    public RetornoAgendamento atualizarStatusColetaAgendamento(Integer id, AtualizacaoStatusColetaRequest statusColeta) throws ApiException {
+    public RetornoAgendamento atualizarStatusColetaAgendamento(Integer id, AtualizacaoStatusColetaRequest statusColetaRequest) throws ApiException {
         try {
-            RetornoAgendamento retorno;
+            RetornoAgendamento retorno = buscarAgendamentoPorId(id);;
 
-            retorno = buscarAgendamentoPorId(id);
-
-            retorno.getAgendamento().setStatus(statusColeta.getStatusColeta());
+            if (statusColetaRequest.getStatusColeta().equals(StatusColeta.CONCLUIDO) || statusColetaRequest.getStatusColeta().equals(StatusColeta.CANCELADO)) {
+                retorno.getAgendamento().setDataConclusao(new Date());
+            }
+            retorno.getAgendamento().setStatus(statusColetaRequest.getStatusColeta());
             if (retorno.isSucesso()) {
                 retorno.setAgendamento(repository.save(retorno.getAgendamento()));
                 retorno.setSucesso(true);
