@@ -33,20 +33,12 @@ public class AgendamentoService {
 
     public RetornoAgendamentos buscarTodosAgendamentos(String filtro) throws ApiException {
         RetornoAgendamentos retorno = new RetornoAgendamentos();
-        StatusColeta filtroStatusColeta = null;
-        if (filtro != null && !filtro.isEmpty()) {
-            try {
-                filtroStatusColeta = StatusColeta.valueOf(filtro);
-            } catch (Exception e) {
-                log.error("Erro ao converter filtro de coleta vindo do query param", e);
-                throw new ApiException(HttpStatus.BAD_REQUEST.value(), "Erro ao converter filtro de coleta vindo do query param");
-
-            }
-        }
 
         try {
-            if (filtroStatusColeta != null) {
-                retorno.setAgendamentos(repository.findAgendamentosByStatus(filtroStatusColeta));
+
+            StatusColeta statusColetaQueryParameter = StatusColetaQueryParameterToStatusColetaEnum(filtro);
+            if (statusColetaQueryParameter != null) {
+                retorno.setAgendamentos(repository.findAgendamentosByStatus(statusColetaQueryParameter));
             } else {
                 retorno.setAgendamentos(repository.findAll());
             }
@@ -62,7 +54,7 @@ public class AgendamentoService {
 
         } catch (Exception e) {
             log.error("Erro ao buscar os dados", e);
-            throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Erro ao buscar os dados.");
+            throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
         }
 
     }
@@ -205,4 +197,22 @@ public class AgendamentoService {
         return retorno;
 
     }
+
+    private StatusColeta StatusColetaQueryParameterToStatusColetaEnum(String queryParameterStatusColeta) throws ApiException {
+
+        if (queryParameterStatusColeta != null && !queryParameterStatusColeta.isEmpty()) {
+            try {
+                return StatusColeta.valueOf(queryParameterStatusColeta);
+            } catch (Exception e) {
+                log.error("Erro ao converter filtro de coleta vindo do query param", e);
+                throw new ApiException(HttpStatus.BAD_REQUEST.value(), "Erro ao converter filtro de coleta vindo do query param");
+
+            }
+        }
+
+    return null;
+
+    }
+
+
 }

@@ -2,7 +2,6 @@ package io.projetocoletarsu.controller;
 
 import io.projetocoletarsu.exception.ApiException;
 import io.projetocoletarsu.model.AgendamentoDTO;
-import io.projetocoletarsu.model.enums.StatusColeta;
 import io.projetocoletarsu.model.request.AtualizacaoStatusColetaRequest;
 import io.projetocoletarsu.model.retorno.Retorno;
 import io.projetocoletarsu.model.retorno.RetornoAgendamento;
@@ -30,11 +29,11 @@ public class AgendamentoController {
     private AgendamentoService service;
 
     @GetMapping
-    public ResponseEntity<RetornoAgendamentos> buscarTodosAgendamentos(@ApiParam(value = "token", required = true) @RequestHeader(value = "token", required = true) String token) {
+    public ResponseEntity<RetornoAgendamentos> buscarTodosAgendamentos(@ApiParam(value = "token", required = true) @RequestHeader(value = "token", required = true) String token, @ApiParam(value = "filtro", required = false) @RequestParam(value = "filtro", required = false) String filtro) {
 
         try {
             tokenValida(token);
-            return ResponseEntity.ok(service.buscarTodosAgendamentos());
+            return ResponseEntity.ok(service.buscarTodosAgendamentos(filtro));
 
 
         } catch (Exception e) {
