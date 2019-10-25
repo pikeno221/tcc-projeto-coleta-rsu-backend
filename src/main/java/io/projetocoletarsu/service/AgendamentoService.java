@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -31,17 +32,32 @@ public class AgendamentoService {
     private static final Logger log = LoggerFactory.getLogger(UsuarioService.class);
 
 
-    public RetornoAgendamentos buscarTodosAgendamentos(String filtro) throws ApiException {
+    public RetornoAgendamentos buscarTodosAgendamentos(String filtro, String dataInicio, String dataFim) throws ApiException {
         RetornoAgendamentos retorno = new RetornoAgendamentos();
 
         try {
 
             StatusColeta statusColetaQueryParameter = StatusColetaQueryParameterToStatusColetaEnum(filtro);
-            if (statusColetaQueryParameter != null) {
-                retorno.setAgendamentos(repository.findAgendamentosByStatusOrderByDataAgendada(statusColetaQueryParameter).orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error ao buscar agendamentos")));
+
+            if (dataInicio == null || dataInicio.isEmpty() || dataFim == null || dataFim.isEmpty()) {
+                if (statusColetaQueryParameter != null) {
+                    retorno.setAgendamentos(repository.findAgendamentosByStatusOrderByDataAgendada(statusColetaQueryParameter).orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error ao buscar agendamentos")));
+                } else {
+                    retorno.setAgendamentos(repository.findAll());
+                }
             } else {
-                retorno.setAgendamentos(repository.findAll());
+                Date dtInicio, dtFim;
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                dtInicio = formatter.parse(dataInicio);
+                dtFim = formatter.parse(dataFim);
+                if (statusColetaQueryParameter != null) {
+                    retorno.setAgendamentos(repository.findAgendamentosByStatusAndDataAgendadaBetween(statusColetaQueryParameter, dtInicio, dtFim).orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error ao buscar agendamentos")));
+                } else {
+                    retorno.setAgendamentos(repository.findAgendamentosByDataAgendadaBetween(dtInicio, dtFim).orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error ao buscar agendamentos")));
+                }
             }
+
+
             retorno.setSucesso(true);
 
             if (retorno.getAgendamentos().isEmpty()) {

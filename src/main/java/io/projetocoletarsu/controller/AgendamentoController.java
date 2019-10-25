@@ -29,11 +29,14 @@ public class AgendamentoController {
     private AgendamentoService service;
 
     @GetMapping
-    public ResponseEntity<RetornoAgendamentos> buscarTodosAgendamentos(@ApiParam(value = "token", required = true) @RequestHeader(value = "token", required = true) String token, @ApiParam(value = "filtro", required = false) @RequestParam(value = "filtro", required = false) String filtro) {
+    public ResponseEntity<RetornoAgendamentos> buscarTodosAgendamentos(@ApiParam(value = "token", required = true) @RequestHeader(value = "token", required = true) String token,
+                                                                       @ApiParam(value = "filtro", required = false) @RequestParam(value = "filtro", required = false) String filtro,
+                                                                       @ApiParam(value = "dataInicio", required = false) @RequestParam(value = "dataInicio", required = false) String dataInicio,
+                                                                       @ApiParam(value = "dataFim", required = false) @RequestParam(value = "dataFim", required = false) String dataFim) {
 
         try {
             tokenValida(token);
-            return ResponseEntity.ok(service.buscarTodosAgendamentos(filtro));
+            return ResponseEntity.ok(service.buscarTodosAgendamentos(filtro, dataInicio, dataFim));
 
 
         } catch (Exception e) {

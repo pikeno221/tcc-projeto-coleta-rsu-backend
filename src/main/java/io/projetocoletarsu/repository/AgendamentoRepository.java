@@ -4,6 +4,7 @@ import io.projetocoletarsu.model.Agendamento;
 import io.projetocoletarsu.model.enums.StatusColeta;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,4 +16,9 @@ public interface AgendamentoRepository extends JpaRepository<Agendamento, Intege
     Optional<List<Agendamento>> findAgendamentosByUsuarioIdAndStatusOrderByDataAgendada(Integer usuario, StatusColeta statusColeta);
 
     Optional<List<Agendamento>> findAgendamentosByStatusOrderByDataAgendada(StatusColeta statusColeta);
+
+
+    Optional<List<Agendamento>> findAgendamentosByStatusAndDataAgendadaBetween(StatusColeta statusColeta, Date dataInicio, Date dataFim);
+
+    Optional<List<Agendamento>> findAgendamentosByDataAgendadaBetween(Date dataInicio, Date dataFim);
 }

@@ -2,13 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7edef785-983f-4ae5-9706-4c9a9c5c56c1" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/projetocoletarsu/controller/AgendamentoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/projetocoletarsu/controller/AgendamentoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/projetocoletarsu/model/Agendamento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/projetocoletarsu/model/Agendamento.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/projetocoletarsu/repository/AgendamentoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/projetocoletarsu/repository/AgendamentoRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/projetocoletarsu/service/AgendamentoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/projetocoletarsu/service/AgendamentoService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/io/projetocoletarsu/controller/AgendamentoController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/projetocoletarsu/controller/AgendamentoController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/io/projetocoletarsu/repository/AgendamentoRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/projetocoletarsu/repository/AgendamentoRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/io/projetocoletarsu/service/AgendamentoService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/projetocoletarsu/service/AgendamentoService.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/../spring-server/target/" />
     <ignored path="$PROJECT_DIR$/../projeto-coleta-rsu-backend/target/" />
@@ -24,33 +21,19 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/io/projetocoletarsu/controller/AgendamentoController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="130">
-              <caret line="75" selection-start-line="75" selection-end-line="75" />
+            <state relative-caret-position="249">
+              <caret line="38" column="87" selection-start-line="38" selection-start-column="87" selection-end-line="38" selection-end-column="87" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/io/projetocoletarsu/service/AgendamentoService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="106" column="97" selection-start-line="106" selection-start-column="97" selection-end-line="106" selection-end-column="97" />
+            <state relative-caret-position="166">
+              <caret line="39" selection-start-line="39" selection-end-line="39" />
               <folding>
-                <element signature="e#8515#8516#0" expanded="true" />
-                <element signature="e#8542#8543#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/src.zip!/java/util/Optional.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="131">
-              <caret line="144" column="19" selection-start-line="144" selection-start-column="19" selection-end-line="144" selection-end-column="19" />
-              <folding>
-                <element signature="e#4242#4243#0" expanded="true" />
-                <element signature="e#4278#4279#0" expanded="true" />
+                <element signature="e#9495#9496#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -59,8 +42,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/io/projetocoletarsu/repository/AgendamentoRepository.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="32" lean-forward="true" selection-start-line="14" selection-start-column="32" selection-end-line="14" selection-end-column="87" />
+            <state relative-caret-position="330">
+              <caret line="22" column="69" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="69" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -68,11 +51,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/io/projetocoletarsu/model/Agendamento.java">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/io/projetocoletarsu/model/enums/StatusUsuario.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="111">
-              <caret line="28" column="28" selection-start-line="28" selection-start-column="28" selection-end-line="28" selection-end-column="28" />
+            <state relative-caret-position="75">
+              <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
             </state>
           </provider>
         </entry>
@@ -90,7 +73,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getRetornoResponseEntity</find>
       <find>OneyTo</find>
       <find>usuario</find>
       <find>localdate</find>
@@ -120,6 +102,7 @@
       <find>orElse</find>
       <find>findAgendamentosByUsuarioIdOrderByDataAgendada</find>
       <find>findAgendamentosByStatus</find>
+      <find>findAgendamentosByStatusOrderByDataAgendada</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -181,10 +164,10 @@
         <option value="$PROJECT_DIR$/.travis.yml" />
         <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
         <option value="$PROJECT_DIR$/src/main/java/io/projetocoletarsu/model/Usuario.java" />
-        <option value="$PROJECT_DIR$/src/main/java/io/projetocoletarsu/controller/AgendamentoController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/io/projetocoletarsu/model/Agendamento.java" />
         <option value="$PROJECT_DIR$/src/main/java/io/projetocoletarsu/repository/AgendamentoRepository.java" />
         <option value="$PROJECT_DIR$/src/main/java/io/projetocoletarsu/service/AgendamentoService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/io/projetocoletarsu/model/Agendamento.java" />
+        <option value="$PROJECT_DIR$/src/main/java/io/projetocoletarsu/controller/AgendamentoController.java" />
       </list>
     </option>
   </component>
@@ -237,6 +220,33 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="tcc-coleta-rsus-backend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="tcc-coleta-rsus-backend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="projetocoletarsu" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="tcc-coleta-rsus-backend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="tcc-coleta-rsus-backend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="projetocoletarsu" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="tcc-coleta-rsus-backend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="tcc-coleta-rsus-backend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="projetocoletarsu" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+              <item name="enums" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -254,7 +264,7 @@
     <property name="RequestMappingsPanelWidth2" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1571970543399" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1571996828000" />
     <property name="extract.method.default.visibility" value="private" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -325,12 +335,12 @@
       <workItem from="1568941687094" duration="6554000" />
       <workItem from="1569780916935" duration="2919000" />
       <workItem from="1570886167630" duration="32279000" />
-      <workItem from="1571103563068" duration="14866000" />
+      <workItem from="1571103563068" duration="17255000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="91931000" />
+    <option name="totallyTimeSpent" value="94320000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -343,9 +353,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4976526" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4976526" visible="true" weight="0.25" />
       <window_info id="Structure" order="1" sideWeight="0.5023474" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -361,14 +370,14 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49930555" weight="0.32971016" />
       <window_info anchor="bottom" id="Spring" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.9076389" weight="0.2860666" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.87569445" weight="0.2860666" />
       <window_info anchor="bottom" id="Docker" order="9" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5090278" side_tool="true" visible="true" weight="0.47472256" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.51111114" side_tool="true" visible="true" weight="0.47472256" />
       <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.49513888" weight="0.21331689" />
       <window_info anchor="bottom" id="Java Enterprise" order="12" />
       <window_info anchor="bottom" id="Database Changes" order="13" />
       <window_info anchor="bottom" id="Version Control" order="14" />
-      <window_info active="true" anchor="bottom" id="Run Dashboard" order="15" sideWeight="0.49097222" visible="true" weight="0.47472256" />
+      <window_info active="true" anchor="bottom" id="Run Dashboard" order="15" sideWeight="0.4888889" visible="true" weight="0.47472256" />
       <window_info anchor="bottom" id="Duplicate detector" order="16" sideWeight="0.49930555" weight="0.3292232" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -414,19 +423,19 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/io/projetocoletarsu/service/AgendamentoService.java</url>
-          <line>38</line>
+          <line>39</line>
           <properties />
           <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/io/projetocoletarsu/service/AgendamentoService.java</url>
-          <line>212</line>
+          <line>228</line>
           <properties />
           <option name="timeStamp" value="14" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/io/projetocoletarsu/service/AgendamentoService.java</url>
-          <line>101</line>
+          <line>117</line>
           <properties />
           <option name="timeStamp" value="15" />
         </line-breakpoint>
@@ -477,7 +486,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../projeto-coleta-rsu-backend/src/main/java/io/projetocoletarsu/service/AbstractEmailService.java" />
     <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/data/spring-data-commons/2.1.5.RELEASE/spring-data-commons-2.1.5.RELEASE-sources.jar!/org/springframework/data/repository/CrudRepository.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="141">
@@ -629,6 +637,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/io/projetocoletarsu/model/Usuario.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="62" column="62" selection-start-line="62" selection-start-column="62" selection-end-line="62" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/io/projetocoletarsu/model/Agendamento.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="111">
+          <caret line="28" column="28" selection-start-line="28" selection-start-column="28" selection-end-line="28" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/src.zip!/java/util/Optional.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="131">
@@ -640,45 +662,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/io/projetocoletarsu/controller/AgendamentoController.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/io/projetocoletarsu/model/enums/StatusUsuario.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
-          <caret line="75" selection-start-line="75" selection-end-line="75" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/io/projetocoletarsu/service/AgendamentoService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="106" column="97" selection-start-line="106" selection-start-column="97" selection-end-line="106" selection-end-column="97" />
-          <folding>
-            <element signature="e#8515#8516#0" expanded="true" />
-            <element signature="e#8542#8543#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/io/projetocoletarsu/model/Usuario.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="62" column="62" selection-start-line="62" selection-start-column="62" selection-end-line="62" selection-end-column="62" />
+        <state relative-caret-position="75">
+          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/io/projetocoletarsu/repository/AgendamentoRepository.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="32" lean-forward="true" selection-start-line="14" selection-start-column="32" selection-end-line="14" selection-end-column="87" />
+        <state relative-caret-position="330">
+          <caret line="22" column="69" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="69" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/io/projetocoletarsu/model/Agendamento.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/io/projetocoletarsu/controller/AgendamentoController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="28" column="28" selection-start-line="28" selection-start-column="28" selection-end-line="28" selection-end-column="28" />
+        <state relative-caret-position="249">
+          <caret line="38" column="87" selection-start-line="38" selection-start-column="87" selection-end-line="38" selection-end-column="87" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/io/projetocoletarsu/service/AgendamentoService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="166">
+          <caret line="39" selection-start-line="39" selection-end-line="39" />
+          <folding>
+            <element signature="e#9495#9496#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
