@@ -31,11 +31,25 @@ public class AgendamentoService {
     private static final Logger log = LoggerFactory.getLogger(UsuarioService.class);
 
 
-    public RetornoAgendamentos buscarTodosAgendamentos() throws ApiException {
+    public RetornoAgendamentos buscarTodosAgendamentos(String filtro) throws ApiException {
         RetornoAgendamentos retorno = new RetornoAgendamentos();
+        StatusColeta filtroStatusColeta = null;
+        if (filtro != null && !filtro.isEmpty()) {
+            try {
+                filtroStatusColeta = StatusColeta.valueOf(filtro);
+            } catch (Exception e) {
+                log.error("Erro ao converter filtro de coleta vindo do query param", e);
+                throw new ApiException(HttpStatus.BAD_REQUEST.value(), "Erro ao converter filtro de coleta vindo do query param");
+
+            }
+        }
 
         try {
-            retorno.setAgendamentos(repository.findAll());
+            if (filtroStatusColeta != null) {
+                retorno.setAgendamentos(repository.findAgendamentosByStatus(filtroStatusColeta));
+            } else {
+                retorno.setAgendamentos(repository.findAll());
+            }
             retorno.setSucesso(true);
 
             if (retorno.getAgendamentos().isEmpty()) {
@@ -141,7 +155,8 @@ public class AgendamentoService {
 
     public RetornoAgendamento atualizarStatusColetaAgendamento(Integer id, AtualizacaoStatusColetaRequest statusColetaRequest) throws ApiException {
         try {
-            RetornoAgendamento retorno = buscarAgendamentoPorId(id);;
+            RetornoAgendamento retorno = buscarAgendamentoPorId(id);
+            ;
 
             if (statusColetaRequest.getStatusColeta().equals(StatusColeta.CONCLUIDO) || statusColetaRequest.getStatusColeta().equals(StatusColeta.CANCELADO)) {
                 retorno.getAgendamento().setDataConclusao(new Date());
@@ -160,9 +175,6 @@ public class AgendamentoService {
             throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Erro ao buscar os dados.");
 
         }
-
-
-
 
 
     }
