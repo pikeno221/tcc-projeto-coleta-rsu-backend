@@ -64,12 +64,14 @@ public class AgendamentoController {
 
 
     @GetMapping("/usuarios/{idUsuario}")
-    public ResponseEntity<RetornoAgendamentos> buscarAgendamentosPorUsuario(@ApiParam(value = "token", required = true) @RequestHeader(value = "token", required = true) String token, @ApiParam(value = "Id do Usuário", required = true) @PathVariable("idUsuario") Integer idUsuario) {
+    public ResponseEntity<RetornoAgendamentos> buscarAgendamentosPorUsuario(@ApiParam(value = "token", required = true) @RequestHeader(value = "token", required = true) String token,
+                                                                            @ApiParam(value = "Id do Usuário", required = true) @PathVariable("idUsuario") Integer idUsuario,
+                                                                            @ApiParam(value = "filtro", required = false) @RequestParam("filtro") String filtro) {
 
 
         try {
             tokenValida(token);
-            RetornoAgendamentos retorno = service.buscarAgendamentosPorUsuario(idUsuario);
+            RetornoAgendamentos retorno = service.buscarAgendamentosPorUsuario(idUsuario, filtro);
 
             if (retorno.isSucesso())
                 return ResponseEntity.ok(retorno);
