@@ -38,7 +38,7 @@ public class AgendamentoService {
 
             StatusColeta statusColetaQueryParameter = StatusColetaQueryParameterToStatusColetaEnum(filtro);
             if (statusColetaQueryParameter != null) {
-                retorno.setAgendamentos(repository.findAgendamentosByStatus(statusColetaQueryParameter));
+                retorno.setAgendamentos(repository.findAgendamentosByStatusOrderByDataAgendada(statusColetaQueryParameter).orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error ao buscar agendamentos")));
             } else {
                 retorno.setAgendamentos(repository.findAll());
             }
@@ -93,20 +93,25 @@ public class AgendamentoService {
         }
     }
 
-    private boolean agendamentoValidoParaInsercao(Agendamento agendamento) {
-        return true;
-    }
 
-    public RetornoAgendamentos buscarAgendamentosPorUsuario(Integer idUsuario) throws ApiException {
+
+
+
+    public RetornoAgendamentos buscarAgendamentosPorUsuario(Integer idUsuario, String filtro) throws ApiException {
         RetornoAgendamentos retorno = new RetornoAgendamentos();
-        Optional<List<Agendamento>> agendamentos;
-
+        Optional<List<Agendamento>> agendamentos = null;
         try {
-            agendamentos = repository.findAgendamentosByUsuarioIdOrderByDataAgendada(idUsuario);
+
+            StatusColeta statusColetaQueryParameter = StatusColetaQueryParameterToStatusColetaEnum(filtro);
+            if (statusColetaQueryParameter != null) {
+                agendamentos = repository.findAgendamentosByUsuarioIdAndStatusOrderByDataAgendada(idUsuario, statusColetaQueryParameter);
+            } else {
+                agendamentos = repository.findAgendamentosByUsuarioIdOrderByDataAgendada(idUsuario);
+            }
 
         } catch (Exception e) {
             log.error("Error ao buscar os dados", e);
-            throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Erro ao buscar os dados.");
+            throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Erro ao buscar agendamentos");
 
         }
 
@@ -117,6 +122,7 @@ public class AgendamentoService {
         } else {
             retorno.setAgendamentos(null);
             retorno.setMensagem("Nenhum Agendamento Encontrado");
+            retorno.setSucesso(false);
         }
 
         return retorno;
@@ -210,8 +216,13 @@ public class AgendamentoService {
             }
         }
 
-    return null;
+        return null;
 
+    }
+
+
+    private boolean agendamentoValidoParaInsercao(Agendamento agendamento) {
+        return true;
     }
 
 

@@ -11,5 +11,8 @@ public interface AgendamentoRepository extends JpaRepository<Agendamento, Intege
 
     Optional<List<Agendamento>> findAgendamentosByUsuarioIdOrderByDataAgendada(Integer usuario);
 
-    List<Agendamento> findAgendamentosByStatus(StatusColeta statusColeta);
+    /* select * fromo agendamentos where id_usuario = x and status like 'CANCELADO' */
+    Optional<List<Agendamento>> findAgendamentosByUsuarioIdAndStatusOrderByDataAgendada(Integer usuario, StatusColeta statusColeta);
+
+    Optional<List<Agendamento>> findAgendamentosByStatusOrderByDataAgendada(StatusColeta statusColeta);
 }

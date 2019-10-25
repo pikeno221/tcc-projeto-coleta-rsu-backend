@@ -24,10 +24,9 @@ public class Agendamento implements Serializable {
     private StatusColeta status;
 
     @JsonProperty("usuario")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
-
 
     @JsonProperty("materiaisColeta")
     private String materiaisColeta;
