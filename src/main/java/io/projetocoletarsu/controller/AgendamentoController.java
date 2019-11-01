@@ -69,7 +69,7 @@ public class AgendamentoController {
     @GetMapping("/usuarios/{idUsuario}")
     public ResponseEntity<RetornoAgendamentos> buscarAgendamentosPorUsuario(@ApiParam(value = "token", required = true) @RequestHeader(value = "token", required = true) String token,
                                                                             @ApiParam(value = "Id do Usuário", required = true) @PathVariable("idUsuario") Integer idUsuario,
-                                                                            @ApiParam(value = "filtro", required = false) @RequestParam("filtro") String filtro) {
+                                                                            @ApiParam(value = "filtro", required = false) @RequestParam(value = "filtro", required = false) String filtro) {
 
 
         try {
@@ -110,6 +110,21 @@ public class AgendamentoController {
             RetornoAgendamento retorno = service.deletarAgendamento(id);
 
             if (retorno.isSucesso()) {
+                return ResponseEntity.noContent().build();
+            }
+        } catch (Exception e) {
+            log.error("error ao fazer request", e);
+        }
+        return ResponseEntity.unprocessableEntity().build();
+    }
+
+    @DeleteMapping()
+    public ResponseEntity<Void> deletarTodosAgendamentos(@ApiParam(value = "token", required = true) @RequestHeader String token) {
+        try {
+            tokenValida(token);
+            boolean retorno = service.deletarTodosAgendamentos();
+
+            if (retorno) {
                 return ResponseEntity.noContent().build();
             }
         } catch (Exception e) {

@@ -167,6 +167,16 @@ public class AgendamentoService {
         return retorno;
     }
 
+    public boolean deletarTodosAgendamentos() throws ApiException {
+        try {
+            repository.deleteAll();
+            return true;
+        } catch (Exception e) {
+            throw new ApiException(422, "Error ao realizar deleção dos agendamentos");
+        }
+    }
+
+
     public RetornoAgendamento atualizarStatusColetaAgendamento(Integer id, AtualizacaoStatusColetaRequest statusColetaRequest) throws ApiException {
         try {
             RetornoAgendamento retorno = buscarAgendamentoPorId(id);
@@ -240,6 +250,7 @@ public class AgendamentoService {
     private boolean agendamentoValidoParaInsercao(Agendamento agendamento) {
         return true;
     }
+
 
 
 }
