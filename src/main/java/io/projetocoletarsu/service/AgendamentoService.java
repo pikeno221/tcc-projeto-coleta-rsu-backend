@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -46,14 +47,15 @@ public class AgendamentoService {
                     retorno.setAgendamentos(repository.findAll());
                 }
             } else {
-                Date dtInicio, dtFim;
+                Calendar dtInicio = Calendar.getInstance(), dtFim = Calendar.getInstance();
                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-                dtInicio = formatter.parse(dataInicio);
-                dtFim = formatter.parse(dataFim);
+                dtInicio.setTime(formatter.parse(dataInicio));
+                dtFim.setTime(formatter.parse(dataFim));
+                validaDatasQueryParameter(dtInicio, dtFim);
                 if (statusColetaQueryParameter != null) {
-                    retorno.setAgendamentos(repository.findAgendamentosByStatusAndDataAgendadaBetween(statusColetaQueryParameter, dtInicio, dtFim).orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error ao buscar agendamentos")));
+                    retorno.setAgendamentos(repository.findAgendamentosByStatusAndDataAgendadaBetween(statusColetaQueryParameter, dtInicio.getTime(), dtFim.getTime()).orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error ao buscar agendamentos")));
                 } else {
-                    retorno.setAgendamentos(repository.findAgendamentosByDataAgendadaBetween(dtInicio, dtFim).orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error ao buscar agendamentos")));
+                    retorno.setAgendamentos(repository.findAgendamentosByDataAgendadaBetween(dtInicio.getTime(), dtFim.getTime()).orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error ao buscar agendamentos")));
                 }
             }
 
@@ -74,6 +76,15 @@ public class AgendamentoService {
         }
 
     }
+
+    private void validaDatasQueryParameter(Calendar dtInicio, Calendar dtFim) throws ApiException {
+        if (dtFim.before(dtInicio)) {
+            throw new ApiException(HttpStatus.BAD_REQUEST.value(), "Data final não pode ser menos que data inical");
+        }
+
+        dtFim.add(Calendar.DAY_OF_MONTH, 1);
+    }
+
 
     public RetornoAgendamento criarAgendamento(AgendamentoDTO agendamentoRequest) throws ApiException {
         RetornoAgendamento retorno = new RetornoAgendamento();
@@ -108,9 +119,6 @@ public class AgendamentoService {
             throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Erro ao persistir dados.");
         }
     }
-
-
-
 
 
     public RetornoAgendamentos buscarAgendamentosPorUsuario(Integer idUsuario, String filtro) throws ApiException {
@@ -250,7 +258,6 @@ public class AgendamentoService {
     private boolean agendamentoValidoParaInsercao(Agendamento agendamento) {
         return true;
     }
-
 
 
 }
