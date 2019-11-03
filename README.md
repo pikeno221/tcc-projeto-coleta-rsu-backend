@@ -1,12 +1,8 @@
-[![Build Status](https://travis-ci.org/pikeno221/tcc-projeto-coleta-rsu-backend.svg?branch=master)](https://travis-ci.org/pikeno221/tcc-projeto-coleta-rsu-backend)
+[![Build Status](https://travis-ci.org/pikeno221/coleta-rsu-backend.svg?branch=master)](https://travis-ci.org/pikeno221/coleta-rsu-backend)
 
 # Coleta RSU Backend
 
 Project created to build a solution of logistical difficulty of reusable wast collection company
-
-## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
 ### What About thi API
 CRUDE of user
@@ -25,11 +21,6 @@ $ mvn test
 ## Deployment
 
 This one was deployed on Heroku, so you dont need to build it on your computer to interect with this API
-
-## Built With
-* [Maven](https://maven.apache.org/) - Dependency Management
-
-
 
 ## Authors
 
