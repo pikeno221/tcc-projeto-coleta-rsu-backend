@@ -76,10 +76,7 @@ public class AgendamentoController {
             tokenValida(token);
             RetornoAgendamentos retorno = service.buscarAgendamentosPorUsuario(idUsuario, filtro);
 
-            if (retorno.isSucesso())
                 return ResponseEntity.ok(retorno);
-            else
-                return ResponseEntity.unprocessableEntity().body(retorno);
 
         } catch (Exception e) {
             return ResponseEntity.unprocessableEntity().body(new RetornoAgendamentos(false, e.getMessage(), null));
