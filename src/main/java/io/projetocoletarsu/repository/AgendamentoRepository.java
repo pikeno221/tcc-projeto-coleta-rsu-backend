@@ -18,7 +18,7 @@ public interface AgendamentoRepository extends JpaRepository<Agendamento, Intege
     Optional<List<Agendamento>> findAgendamentosByStatusOrderByDataAgendada(StatusColeta statusColeta);
 
 
-    Optional<List<Agendamento>> findAgendamentosByStatusAndDataAgendadaBetween(StatusColeta statusColeta, Date dataInicio, Date dataFim);
+    Optional<List<Agendamento>> findAgendamentosByStatusAndDataAgendadaBetweenOrderByDataAgendada(StatusColeta statusColeta, Date dataInicio, Date dataFim);
 
-    Optional<List<Agendamento>> findAgendamentosByDataAgendadaBetween(Date dataInicio, Date dataFim);
+    Optional<List<Agendamento>> findAgendamentosByDataAgendadaBetweenOrderByDataAgendada(Date dataInicio, Date dataFim);
 }
