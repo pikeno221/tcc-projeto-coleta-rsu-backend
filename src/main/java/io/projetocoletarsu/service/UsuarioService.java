@@ -220,6 +220,10 @@ public class UsuarioService {
         if (usuarioDto.getSenha() != null && !usuarioDto.getSenha().isEmpty())
             usuarioBanco.setSenha(usuarioDto.getSenha());
 
+        if (usuarioDto.getTipoPessoa() != null) {
+            usuarioBanco.setTipoPessoa(usuarioDto.getTipoPessoa());
+        }
+
         return usuarioBanco;
 
     }

@@ -53,9 +53,9 @@ public class AgendamentoService {
                 dtFim.setTime(formatter.parse(dataFim));
                 validaDatasQueryParameter(dtInicio, dtFim);
                 if (statusColetaQueryParameter != null) {
-                    retorno.setAgendamentos(repository.findAgendamentosByStatusAndDataAgendadaBetween(statusColetaQueryParameter, dtInicio.getTime(), dtFim.getTime()).orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error ao buscar agendamentos")));
+                    retorno.setAgendamentos(repository.findAgendamentosByStatusAndDataAgendadaBetweenOrderByDataAgendada(statusColetaQueryParameter, dtInicio.getTime(), dtFim.getTime()).orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error ao buscar agendamentos")));
                 } else {
-                    retorno.setAgendamentos(repository.findAgendamentosByDataAgendadaBetween(dtInicio.getTime(), dtFim.getTime()).orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error ao buscar agendamentos")));
+                    retorno.setAgendamentos(repository.findAgendamentosByDataAgendadaBetweenOrderByDataAgendada(dtInicio.getTime(), dtFim.getTime()).orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error ao buscar agendamentos")));
                 }
             }
 
