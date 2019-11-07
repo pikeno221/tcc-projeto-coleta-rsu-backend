@@ -23,7 +23,14 @@ public abstract class AbstractEmailService implements EmailService {
         sm.setFrom(sender);
         sm.setSubject("Sistema Coleta Residuos - Recuperacao de Senha");
         sm.setSentDate(new Date(System.currentTimeMillis()));
-        sm.setText("Sua senha eh: " + usuario.getSenha());
+        sm.setText("Olá querido parceiro,\n" +
+                "Aqui está sua senha atual: " + usuario.getSenha() + ". Em breve teremos a função de trocar de senha, recomendamos que você execute este passo para \n" +
+                "maior segurança! (= \n" +
+                "\n" +
+                "\n" +
+                "Obrigado,\n" +
+                "\n" +
+                "Equipe RECICLART." );
 
         return sm;
     }
